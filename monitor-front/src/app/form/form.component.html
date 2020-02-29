@@ -1,0 +1,31 @@
+<div class="form_container">
+	<div *ngIf="attributesExist">
+        <br><br>
+		<form [formGroup]="attributeForm" (ngSubmit)="submitAttribute()">
+            <div *ngIf="duplicateText">Text already exists!</div>
+			<mat-form-field class="form-field">
+				<input type="text" matInput formControlName="textControl" placeholder="Text">
+			</mat-form-field>
+            <br>
+			<mat-form-field class="form-field">
+				<input type="text" matInput formControlName="attributeControl" [matAutocomplete]="attributeField" placeholder="Attribute">
+				<mat-autocomplete #attributeField="matAutocomplete">
+					<mat-option *ngFor="let attribute of filteredAttributes | async" [value]="attribute">{{attribute}}</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+            <br>
+			<mat-form-field class="form-field">
+				<input type="text" matInput formControlName="operatorControl" [matAutocomplete]="operatorField" placeholder="Operator">
+				<mat-autocomplete #operatorField="matAutocomplete">
+					<mat-option *ngFor="let operator of filteredOperators | async" [value]="operator">{{operator}}</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+            <br>
+			<mat-form-field class="form-field">
+				<input type="number" matInput formControlName="valueControl" placeholder="Operator Value">
+			</mat-form-field>
+            <br>
+            <button mat-stroked-button type="submit" [disabled]="!attributeForm.valid">Save</button>
+		</form>
+	</div>
+</div>

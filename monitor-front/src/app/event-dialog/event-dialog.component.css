@@ -1,0 +1,22 @@
+/**********************/
+/**** FORM CSS *****/
+/**********************/
+.eventDialogTitle {
+  margin: -24px -24px 0px -24px !important;
+  padding: 10px 24px;
+  background: #333;
+  color: #fff;
+  cursor: move;
+}
+
+.eventDialogContent {
+	border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+    text-align: center;
+	padding: 10px;
+	width: 250px;
+}
+
+.formField {
+    display:inline-block;
+}

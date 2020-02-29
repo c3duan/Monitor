@@ -1,0 +1,12 @@
+<div id="titlebar">
+	<h1>{{title}}</h1>
+	<button class="help" (click)="help_screen()" mat-icon-button>
+		<mat-icon>help</mat-icon>
+	</button>
+	<button class="settings" mat-icon-button (click)="set_screen()">
+		<mat-icon>settings</mat-icon>
+	</button>
+</div>
+<div *ngIf="form"><app-form></app-form></div>
+<div *ngIf="chart"><app-chart></app-chart></div>
+<div *ngIf="help"><app-help></app-help></div>

@@ -1,0 +1,26 @@
+{
+  "name": "monitor-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon -e js,py ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.15.5",
+    "html": "^1.0.0",
+    "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "natural": "^0.5.6",
+    "pg-promise": "^7.0.3",
+    "pg-query-stream": "^1.1.1",
+    "pug": "2.0.0-beta11",
+    "serve-favicon": "~2.4.5",
+    "wordnet-db": "^3.1.6"
+  }
+}

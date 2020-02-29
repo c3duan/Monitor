@@ -1,0 +1,30 @@
+#titlebar {
+	background-image: url('../assets/images/building.jpg');
+	background-repeat:no-repeat;
+	background-size: cover;
+	box-shadow:inset 1px 1px 150px 150px rgba(0, 0, 0, .5);
+	padding: 6%;
+	height: 10%; 
+}
+
+#titlebar h1 {
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .8);
+	line-height: 55px;
+	font-size: 50px;
+	margin: auto;
+	color:#f1f2f6;
+}
+
+.settings {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.help {
+	position: absolute;
+	top: 20px;
+	right: 50px;
+}

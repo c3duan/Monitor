@@ -1,0 +1,22 @@
+<h2 class="attributeDialogTitle" mat-dialog-title>Edit Attribute</h2>
+<div class="attributeDialogContent">
+    <br><br>
+    <form [formGroup]="attributeForm" (ngSubmit)="submitAttribute()">
+        <mat-form-field class="formField">
+            <input type="text" matInput formControlName="streamControl" [readonly]="true" value="{{stream}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="formField">
+            <input type="text" matInput formControlName="attributeControl" value="{{attribute}}">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="formField">
+            <input type="text" matInput formControlName="valueControl" value="{{value}}">
+        </mat-form-field>
+        <br>
+        <br>
+        <button mat-stroked-button type="submit" [disabled]="!attributeForm.valid">Save</button>
+        <button mat-stroked-button type="button" (click)="closeDialog()">Cancel</button>
+        <button mat-stroked-button type="button" [disabled]="!attributeForm.valid" color="warn" (click)="deleteAttribute()">Delete</button>
+    </form>
+</div>

@@ -1,0 +1,43 @@
+<div id="chart_container">
+    <nav class="navbar">
+        <ul>
+            <li> <input id="query" type="text" (keyup.enter)="search(query.value)" #query /> </li>
+            <li> <button mat-icon-button (click)="search(query.value)" ><mat-icon>search</mat-icon></button> </li>
+        </ul>
+    </nav>
+    <mat-progress-spinner *ngIf="waiting" id="progress" mode="indeterminate" [diameter]="250"></mat-progress-spinner>
+    <div *ngIf="!waiting">
+        <h2 *ngIf="no_results">No Results</h2>
+        <div class="search_pages_container">
+            <ul class="search_pages">
+                <li class="search_page" *ngFor="let page of pages">
+                    <a (click)="getPage(page)">{{page+1}}</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="charts" >
+            <li *ngFor="let group of vis_groups">
+                <div class="group_title">
+                    {{group.group_name}} {{group.group_val}}
+                    <button mat-icon-button (click)="openDialog(group)"><mat-icon>open_in_new</mat-icon></button>
+                </div>
+                <mat-tab-group (selectedTabChange)="getChart($event)">
+                    <mat-tab *ngFor="let stream of group.streams; let i = index" label={{stream}}>
+                        <ng-template matTabContent>
+                            <!-- <button mat-icon-button (click)="logEvent(stream)"><mat-icon>add_comment</mat-icon></button> -->
+                            <button mat-icon-button (click)="openCurrentEventDialog(stream)"><mat-icon>add_comment</mat-icon></button>
+                            <div id="{{stream}}" style="padding-bottom: 20px;"></div>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </li>
+        </ul>
+        <div class="search_pages_container">
+            <ul class="search_pages">
+                <li class="search_page" *ngFor="let page of pages">
+                    <a (click)="getPage(page)">{{page+1}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

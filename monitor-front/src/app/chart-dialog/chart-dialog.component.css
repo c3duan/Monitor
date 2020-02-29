@@ -1,0 +1,14 @@
+.group_title {
+	font-weight:800;
+	color:white;
+	padding: 10px;
+	background-color: #333;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+
+.group_dialog_content {
+	padding: 10px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}

@@ -1,0 +1,19 @@
+/***********************/
+/***** GENERAL CSS *****/
+/***********************/
+h1, h2, h3, h4, h5, h6, ul, p {
+	font-family: 'Helvetica';
+	margin: 1%;
+	padding: 1%;
+}
+
+/****************/
+/***** FORM *****/
+/****************/
+.form_container {
+    text-align:center;
+}
+
+.form-field {
+    display:inline-block;
+}

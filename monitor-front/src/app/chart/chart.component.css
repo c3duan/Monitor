@@ -1,0 +1,136 @@
+/***********************/
+/***** GENERAL CSS *****/
+/***********************/
+h1, h2, h3, h4, h5, h6, ul, p {
+	font-family: 'Helvetica';
+	margin: 1%;
+	padding: 1%;
+}
+
+ul { 
+	list-style-type: none;
+	margin: 2%;
+	padding: 2%;
+}
+
+li {
+	margin: 5px;
+	padding: 5px;
+	min-width: 500px;
+}
+
+hr {
+	display: block;
+	width: 95%;
+}
+
+/**********************/
+/***** CHARTS CSS *****/
+/**********************/
+#chart_container {
+	box-sizing:border-box;
+	display:inline-block;
+	height:100%;
+	width:100%;
+}
+
+
+ul.charts {
+	box-sizing:border-box;
+	display:inline-block;
+	height:100%;
+	padding-left:180px;
+}
+
+ul.charts li {
+	background-color: #ffffff;
+	border-radius:6px;
+	box-shadow: 0 0 2px grey;
+	margin: 10px 20px;
+	width: 45%;
+	display:block;
+	float:left;
+}
+
+.group_title {
+	font-weight:800;
+	color:white;
+	padding: 10px;
+	background-color: #333;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+    position: relative;
+}
+
+.group_title button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+/**********************/
+/***** NAVBAR CSS *****/
+/**********************/
+.navbar {
+	position:sticky;
+	z-index:500;
+	top:0;
+}
+
+.navbar ul {
+	background-color: #333;
+	list-style-type: none;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.navbar li {
+	position:relative;
+	left:32%;
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.navbar li #query {
+	width: 530px;
+	font-size: 18px;
+}
+
+/************************/
+/***** SEARCH PAGES *****/
+/************************/
+
+.search_pages_container {
+	text-align: center;
+	height:50px;
+}
+
+.search_pages {
+	display: inline-block;
+	text-align: left;
+	padding: 0px 10px 10px 10px;
+}
+
+.search_page {
+	display: inline;
+	list-style-type: none;
+	font-size:18px;
+}
+
+li.search_page a:hover{
+	cursor:pointer;
+}
+
+/*******************/
+/***** SPINNER *****/
+/*******************/
+
+#progress {
+    position: fixed;
+    left: 41%;
+    top: 55%;
+}
