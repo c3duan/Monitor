@@ -14,7 +14,7 @@
     "dotenv": "^8.2.0",
     "express": "~4.15.5",
     "html": "^1.0.0",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.1",
     "mysql": "^2.15.0",
     "natural": "^0.5.6",
     "pg-promise": "^7.0.3",
