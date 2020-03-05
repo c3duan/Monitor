@@ -23,8 +23,9 @@ import { MatInputModule } from '@angular/material/input'
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule } from '@angular/material';
 import { HelpComponent } from './help/help.component';
+import { LoggerModule, LoggerConfig } from 'ngx-logger';
 
 
 
@@ -55,10 +56,9 @@ import { HelpComponent } from './help/help.component';
 		MatTabsModule,
 		MatIconModule,
 		FormsModule,
-		DragDropModule
-	],
-	exports: [
-		DragDropModule
+		DragDropModule,
+		MatCheckboxModule,
+		LoggerModule
 	],
 	providers: [
 		ChartService,

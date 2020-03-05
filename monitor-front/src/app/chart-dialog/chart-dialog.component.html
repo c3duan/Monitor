@@ -9,10 +9,11 @@
     <br>
     <mat-dialog-content>
         <mat-tab-group (selectedTabChange)="get_chart($event)">
-            <mat-tab *ngFor="let stream of streams" label={{stream}}>
+            <mat-tab *ngFor="let stream of streams" label={{stream.stream}}>
                 <ng-template matTabContent>
-                    <button mat-icon-button (click)="openCurrentEventDialog(stream+'_dialog')"><mat-icon>add_comment</mat-icon></button>
-                    <div id="{{stream}}_dialog"></div>
+                    <button mat-icon-button (click)="openCurrentEventDialog(stream.stream + '_dialog')"><mat-icon>add_comment</mat-icon></button>
+                    <mat-checkbox *ngIf="showCheckBox" [checked]="stream.checked" (change)="onChange(stream)">Does this result match?</mat-checkbox>
+                    <div id="{{stream.stream}}_dialog"></div>
                 </ng-template>
             </mat-tab>
         </mat-tab-group>

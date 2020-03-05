@@ -12,11 +12,12 @@ import { ChartService } from '../chart/chart.service';
 })
 export class ChartDialogComponent implements OnInit {
 
-
     name;
     value;
     streams;
     stream;
+    showCheckBox;
+    checked;
     starts;
     ends;
     atts;
@@ -35,7 +36,9 @@ export class ChartDialogComponent implements OnInit {
         this.name = this.data.name;
         this.value = this.data.value;
         this.streams = this.data.streams;
-        this.stream = this.streams[0]
+        this.stream = this.streams[0].stream;
+        this.showCheckBox = this.data.showCheckBox;
+        this.checked = this.data.checked;
         this.starts = this.data.start;
         this.ends = this.data.end;
         this.atts = [];
@@ -160,6 +163,10 @@ export class ChartDialogComponent implements OnInit {
 
         this.dialog.open(EventDialogComponent, dialogConfig);
 
+    }
+
+    onChange(stream) {
+        stream.checked = !stream.checked;
     }
 
 

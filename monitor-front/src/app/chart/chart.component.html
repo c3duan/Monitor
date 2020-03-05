@@ -16,17 +16,19 @@
             </ul>
         </div>
         <ul class="charts" >
-            <li *ngFor="let group of vis_groups">
+            <li *ngFor="let group of vis_groups; let i = index">
                 <div class="group_title">
                     {{group.group_name}} {{group.group_val}}
-                    <button mat-icon-button (click)="openDialog(group)"><mat-icon>open_in_new</mat-icon></button>
+                    <button mat-icon-button (click)="openDialog(i, group)"><mat-icon>open_in_new</mat-icon></button>
                 </div>
                 <mat-tab-group (selectedTabChange)="getChart($event)">
-                    <mat-tab *ngFor="let stream of group.streams; let i = index" label={{stream}}>
+                    <mat-tab *ngFor="let stream of group.streams; let j = index" label={{stream.stream}}>
                         <ng-template matTabContent>
-                            <!-- <button mat-icon-button (click)="logEvent(stream)"><mat-icon>add_comment</mat-icon></button> -->
-                            <button mat-icon-button (click)="openCurrentEventDialog(stream)"><mat-icon>add_comment</mat-icon></button>
-                            <div id="{{stream}}" style="padding-bottom: 20px;"></div>
+                            <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
+                            <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                            <mat-checkbox *ngIf="isEvent && !(i === 0 && j === 0)" 
+                                [checked]="stream.checked" (change)="onChange(stream)">Does this result match?</mat-checkbox>
+                            <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
                         </ng-template>
                     </mat-tab>
                 </mat-tab-group>

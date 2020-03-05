@@ -4,6 +4,7 @@ import { EventDialogComponent } from '../event-dialog/event-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartService } from './chart.service';
+import { LoggerService } from '../logger/logger.service';
 
 @Component({
 	selector: 'app-chart',
@@ -15,12 +16,17 @@ export class ChartComponent implements OnInit {
 
     all_groups;
     vis_groups;
+    isEvent;
     no_results;
     waiting;
     pages;
 
 
-	constructor(private http: HttpClient, private chartService: ChartService, private dialog: MatDialog) { }
+    constructor(
+        private http: HttpClient, 
+        private chartService: ChartService, 
+        private loggerService: LoggerService,
+        private dialog: MatDialog) { }
 
 
 	ngOnInit() { 
@@ -28,13 +34,17 @@ export class ChartComponent implements OnInit {
         this.no_results = false;
         this.all_groups = null;
         this.vis_groups = null;
+        this.isEvent = false;
         this.waiting = false;
         this.pages = null;
-
-	}
-
+    }
 
 	search(query) {
+
+        if (this.all_groups !== null) {
+            console.log('here')
+            this.loggerService.log(this.all_groups);
+        }
 
         this.all_groups = null;
         this.vis_groups = null;
@@ -43,6 +53,11 @@ export class ChartComponent implements OnInit {
         
         let translated = this.chartService.translateQuery(query).then(translated => {
             var query = translated['newQuery'];
+
+            if (query.includes('event')) {
+                this.isEvent = true;
+            }
+
             this.chartService.search(query, this);
         });
 
@@ -50,7 +65,6 @@ export class ChartComponent implements OnInit {
 
 
 	getChart(event: MatTabChangeEvent) {
-
 		var stream = event.tab.textLabel;
         this.chartService.getChartData(stream, stream, this);
 	}
@@ -59,7 +73,7 @@ export class ChartComponent implements OnInit {
     resetCharts(): void {
         for (var row_index in this.vis_groups) {
 
-            var name = this.vis_groups[row_index]['streams'][0];
+            var name = this.vis_groups[row_index]['streams'][0].stream;
             if (this.vis_groups[row_index]['start'] === null) {
                 this.chartService.getChartData(name, name, this);
             } else {
@@ -76,14 +90,12 @@ export class ChartComponent implements OnInit {
 
 
 	getPage(page) {
-
-		this.vis_groups = this.all_groups[page];
+        this.vis_groups = this.all_groups[page];
 		this.resetCharts();
-
 	}
 
 
-    openDialog(group) {
+    openDialog(i, group) {
 
         const dialogConfig = new MatDialogConfig();
 
@@ -93,6 +105,7 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
+            'showCheckBox': this.isEvent && i !== 0,
             'start': group.start,
             'end': group.end
         };
@@ -119,6 +132,10 @@ export class ChartComponent implements OnInit {
         dialogConfig.disableClose = true;
 
         this.dialog.open(EventDialogComponent, dialogConfig);
+    }
+
+    onChange(stream) {
+        stream.checked = !stream.checked;
     }
 
 }

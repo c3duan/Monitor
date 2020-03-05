@@ -70,7 +70,7 @@ export class ChartService {
                 page_data.push({
                     'group_name': rows[row_index]['group_name'],
                     'group_val': rows[row_index]['group_val'],
-                    'streams': rows[row_index]['streams'],
+                    'streams': this.mapStreams(rows[row_index]['streams']),
                     'start': 'start' in rows[row_index] ? rows[row_index]['start'] : null,
                     'end': 'end' in rows[row_index] ? rows[row_index]['end'] : null
                 });
@@ -86,13 +86,22 @@ export class ChartService {
             }
 
             chartComponent.all_groups = all_data;
-            chartComponent.vis_groups = all_data[0];
-            chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
+			chartComponent.vis_groups = all_data[0];
+			chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
 			chartComponent.no_results = all_data.length > 0 ? false : true;
 			this.charts = {}; // reset all cached layouts and configs
             chartComponent.resetCharts();
 
         });
+	}
+
+	mapStreams(streams) {
+		return streams.map(stream => {
+			return {
+				'stream': stream,
+				'checked': false
+			};
+		})
 	}
 
 	getShape(start, end) {
