@@ -72,31 +72,16 @@ ul.charts li {
 /***** NAVBAR CSS *****/
 /**********************/
 .navbar {
-	position:sticky;
-	z-index:500;
-	top:0;
-}
-
-.navbar ul {
 	background-color: #333;
-	list-style-type: none;
-	overflow: hidden;
-	padding: 0;
-	margin: 0;
-}
-
-.navbar li {
-	position:relative;
-	left:32%;
-	display: inline-block;
 	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
 }
 
-.navbar li #query {
-	width: 530px;
+.navbar .spacer {
+	flex: 1 1 auto;
+}
+
+#query {
+	width: 550px;
 	font-size: 18px;
 }
 
@@ -133,4 +118,17 @@ li.search_page a:hover{
     position: fixed;
     left: 41%;
     top: 55%;
+}
+  
+.sidenav-container {
+	height: 100%;
+}
+
+.sidenav-list {
+	width: 120px;
+}
+
+swiper {
+	width: 400px;
+	height: 500px;
 }

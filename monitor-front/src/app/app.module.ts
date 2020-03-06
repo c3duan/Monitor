@@ -23,11 +23,15 @@ import { MatInputModule } from '@angular/material/input'
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { SwiperModule, SwiperConfigInterface, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { HelpComponent } from './help/help.component';
-import { LoggerModule, LoggerConfig } from 'ngx-logger';
+import { LoggerModule } from 'ngx-logger';
 
-
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+	direction: 'horizontal',
+	slidesPerView: 'auto'
+  };
 
 
 @NgModule({
@@ -58,11 +62,19 @@ import { LoggerModule, LoggerConfig } from 'ngx-logger';
 		FormsModule,
 		DragDropModule,
 		MatCheckboxModule,
+		MatToolbarModule,
+		MatSidenavModule,
+		MatListModule,
+		SwiperModule,
 		LoggerModule
 	],
 	providers: [
 		ChartService,
-		FormService
+		FormService,
+		{
+			provide: SWIPER_CONFIG,
+			useValue: DEFAULT_SWIPER_CONFIG
+		}
 	],
     bootstrap: [ AppComponent ],
     entryComponents: [ 

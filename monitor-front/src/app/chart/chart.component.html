@@ -1,45 +1,99 @@
 <div id="chart_container">
-    <nav class="navbar">
-        <ul>
-            <li> <input id="query" type="text" (keyup.enter)="search(query.value)" #query /> </li>
-            <li> <button mat-icon-button (click)="search(query.value)" ><mat-icon>search</mat-icon></button> </li>
-        </ul>
-    </nav>
-    <mat-progress-spinner *ngIf="waiting" id="progress" mode="indeterminate" [diameter]="250"></mat-progress-spinner>
-    <div *ngIf="!waiting">
-        <h2 *ngIf="no_results">No Results</h2>
-        <div class="search_pages_container">
-            <ul class="search_pages">
-                <li class="search_page" *ngFor="let page of pages">
-                    <a (click)="getPage(page)">{{page+1}}</a>
-                </li>
-            </ul>
-        </div>
-        <ul class="charts" >
-            <li *ngFor="let group of vis_groups; let i = index">
-                <div class="group_title">
-                    {{group.group_name}} {{group.group_val}}
-                    <button mat-icon-button (click)="openDialog(i, group)"><mat-icon>open_in_new</mat-icon></button>
+    <mat-toolbar class="navbar">
+        <mat-toolbar-row>
+            <button mat-icon-button (click)="snav.toggle()">Events</button>
+            <span class="spacer"></span>
+            <span>
+                <input matInput id="query" type="text" (keyup.enter)="search(query.value)" #query />
+                <button mat-icon-button (click)="search(query.value)"><mat-icon>search</mat-icon></button>
+            </span>
+            <span class="spacer"></span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #snav [mode]="side" fixedTopGap="56">
+            <mat-nav-list class="sidenav-list">
+                <a mat-list-item *ngFor="let event of events" (click)="search(event + ' event'); snav.close()">{{event + ' event'}}</a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-progress-spinner *ngIf="waiting" id="progress" mode="indeterminate" [diameter]="250"></mat-progress-spinner>
+            <div *ngIf="!waiting">
+                <h2 *ngIf="no_results">No Results</h2>
+                <div *ngIf="isEvent" class="search_pages_container">
+                    <ul class="search_pages">
+                        <li class="search_page" *ngFor="let page of pages">
+                            <a (click)="getPage(page)">{{page+1}}</a>
+                        </li>
+                    </ul>
                 </div>
-                <mat-tab-group (selectedTabChange)="getChart($event)">
-                    <mat-tab *ngFor="let stream of group.streams; let j = index" label={{stream.stream}}>
-                        <ng-template matTabContent>
-                            <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
-                            <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
-                            <mat-checkbox *ngIf="isEvent && !(i === 0 && j === 0)" 
-                                [checked]="stream.checked" (change)="onChange(stream)">Does this result match?</mat-checkbox>
-                            <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
-                        </ng-template>
-                    </mat-tab>
-                </mat-tab-group>
-            </li>
-        </ul>
-        <div class="search_pages_container">
-            <ul class="search_pages">
-                <li class="search_page" *ngFor="let page of pages">
-                    <a (click)="getPage(page)">{{page+1}}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+                <ul class="charts" *ngIf="isEvent">
+                    <li>
+                        <div class="group_title">
+                            {{all_groups[0].group_name}} {{all_groups[0].group_val}}
+                            <button mat-icon-button (click)="openDialog(i, all_groups[0])"><mat-icon>open_in_new</mat-icon></button>
+                        </div>
+                        <mat-tab-group (selectedTabChange)="getChart($event)">
+                            <mat-tab *ngFor="let stream of all_groups[0].streams" label={{stream.stream}}>
+                                <ng-template matTabContent>
+                                    <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
+                                    <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                                    <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
+                                </ng-template>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </li>
+                    <li>
+                        <div [swiper]="swiperConfig" (indexChange)="onIndexChange($event)" >
+                            <div class="swiper-wrapper">
+                                <div *ngFor="let group of all_groups | slice:1; let i = index">
+                                    <div class="group_title">
+                                        {{group.group_name}} {{group.group_val}}
+                                        <button mat-icon-button (click)="openDialog(i, group)"><mat-icon>open_in_new</mat-icon></button>
+                                    </div>
+                                    <mat-tab-group (selectedTabChange)="getChart($event)">
+                                        <mat-tab *ngFor="let stream of group.streams" label={{stream.stream}}>
+                                            <ng-template matTabContent>
+                                                <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
+                                                <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                                                <mat-checkbox [checked]="stream.checked" (change)="onChange(stream)">Does this result match?</mat-checkbox>
+                                                <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
+                                            </ng-template>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next" (click)="next()"></div>
+                            <div class="swiper-button-prev" (click)="prev()"></div>
+                        </swiper>
+                    </li>
+                </ul>
+                <ul class="charts" *ngIf="!isEvent">
+                    <li *ngFor="let group of vis_groups; let i = index">
+                        <div class="group_title">
+                            {{group.group_name}} {{group.group_val}}
+                            <button mat-icon-button (click)="openDialog(i, group)"><mat-icon>open_in_new</mat-icon></button>
+                        </div>
+                        <mat-tab-group (selectedTabChange)="getChart($event)">
+                            <mat-tab *ngFor="let stream of group.streams" label={{stream.stream}}>
+                                <ng-template matTabContent>
+                                    <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
+                                    <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                                    <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
+                                </ng-template>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </li>
+                </ul>
+                <div *ngIf="isEvent" class="search_pages_container">
+                    <ul class="search_pages">
+                        <li class="search_page" *ngFor="let page of pages">
+                            <a (click)="getPage(page)">{{page+1}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

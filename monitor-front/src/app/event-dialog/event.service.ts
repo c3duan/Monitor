@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobVars } from '../global';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class EventDialogService {
+export class EventService {
 
 
     constructor(private http: HttpClient) { }
@@ -25,6 +26,11 @@ export class EventDialogService {
                 resolve(success);
             });
         });
+    }
+
+    getEventData(): Observable<any> {
+        var url = GlobVars.baseUrl + ':3000/api/event';
+        return this.http.get(url);
     }
 
 

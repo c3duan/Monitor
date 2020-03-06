@@ -1,6 +1,6 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { EventDialogService } from './event-dialog.service';
+import { EventService } from './event.service';
 import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
@@ -24,7 +24,7 @@ export class EventDialogComponent implements OnInit {
     end;
 
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<EventDialogComponent>, private eventDialogService: EventDialogService) { }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<EventDialogComponent>, private eventService: EventService) { }
 
 
     ngOnInit() {
@@ -43,7 +43,7 @@ export class EventDialogComponent implements OnInit {
         var start = this.start;
         var end = this.end;
 
-        let success = this.eventDialogService.submitEventData(eventName, streamName, start, end).then(success => {
+        let success = this.eventService.submitEventData(eventName, streamName, start, end).then(success => {
             this.dialogRef.close();
         });
 

@@ -66,28 +66,33 @@ export class ChartService {
             var count = 1;
 
             for (var row_index in rows) {
-
-                page_data.push({
+				let datum = {
                     'group_name': rows[row_index]['group_name'],
                     'group_val': rows[row_index]['group_val'],
                     'streams': this.mapStreams(rows[row_index]['streams']),
                     'start': 'start' in rows[row_index] ? rows[row_index]['start'] : null,
                     'end': 'end' in rows[row_index] ? rows[row_index]['end'] : null
-                });
-
-                if ((count % 10 === 0 && count > 0) || count > data_size-1) {
-                    all_data.push(page_data);
-                    page_data = [];
-                    if (count >= 100) { break }
-                }
-
-                count += 1
+				};
+				
+				if (chartComponent.isEvent) {
+					all_data.push(datum);
+				} else {
+					page_data.push(datum);
+					if ((count % 10 === 0 && count > 0) || count > data_size-1) {
+						all_data.push(page_data);
+						page_data = [];
+						if (count >= 100) { break; }
+					}
+					count += 1;
+				}
 
             }
 
-            chartComponent.all_groups = all_data;
-			chartComponent.vis_groups = all_data[0];
-			chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
+			chartComponent.all_groups = all_data;
+			if (!chartComponent.isEvent) {
+				chartComponent.vis_groups = all_data[0];
+				chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
+			}
 			chartComponent.no_results = all_data.length > 0 ? false : true;
 			this.charts = {}; // reset all cached layouts and configs
             chartComponent.resetCharts();
@@ -134,7 +139,6 @@ export class ChartService {
 
 		x = x.reverse();
 		y = y.reverse();
-		
 		if (!(id in this.charts)) {
 			this.charts[id] = { 
 				layout: JSON.parse(JSON.stringify(this.default_layout)),
