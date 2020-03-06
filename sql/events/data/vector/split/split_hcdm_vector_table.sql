@@ -118,7 +118,7 @@ CREATE TABLE hcdm_vectors_split_1 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_1.csv" INTO TABLE hcdm_vectors_split_1 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_1.csv" INTO TABLE hcdm_vectors_split_1 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_2;
 
@@ -238,7 +238,7 @@ CREATE TABLE hcdm_vectors_split_2 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_2.csv" INTO TABLE hcdm_vectors_split_2 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_2.csv" INTO TABLE hcdm_vectors_split_2 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_3;
 
@@ -358,7 +358,7 @@ CREATE TABLE hcdm_vectors_split_3 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_3.csv" INTO TABLE hcdm_vectors_split_3 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_3.csv" INTO TABLE hcdm_vectors_split_3 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_4;
 
@@ -478,7 +478,7 @@ CREATE TABLE hcdm_vectors_split_4 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_4.csv" INTO TABLE hcdm_vectors_split_4 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_4.csv" INTO TABLE hcdm_vectors_split_4 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_5;
 
@@ -598,7 +598,7 @@ CREATE TABLE hcdm_vectors_split_5 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_5.csv" INTO TABLE hcdm_vectors_split_5 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_5.csv" INTO TABLE hcdm_vectors_split_5 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_6;
 
@@ -718,7 +718,7 @@ CREATE TABLE hcdm_vectors_split_6 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_6.csv" INTO TABLE hcdm_vectors_split_6 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_6.csv" INTO TABLE hcdm_vectors_split_6 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_7;
 
@@ -838,7 +838,7 @@ CREATE TABLE hcdm_vectors_split_7 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_7.csv" INTO TABLE hcdm_vectors_split_7 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_7.csv" INTO TABLE hcdm_vectors_split_7 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_8;
 
@@ -958,7 +958,7 @@ CREATE TABLE hcdm_vectors_split_8 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_8.csv" INTO TABLE hcdm_vectors_split_8 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_8.csv" INTO TABLE hcdm_vectors_split_8 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_9;
 
@@ -1078,7 +1078,7 @@ CREATE TABLE hcdm_vectors_split_9 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_9.csv" INTO TABLE hcdm_vectors_split_9 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_9.csv" INTO TABLE hcdm_vectors_split_9 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_10;
 
@@ -1198,7 +1198,7 @@ CREATE TABLE hcdm_vectors_split_10 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_10.csv" INTO TABLE hcdm_vectors_split_10 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_10.csv" INTO TABLE hcdm_vectors_split_10 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_11;
 
@@ -1318,7 +1318,7 @@ CREATE TABLE hcdm_vectors_split_11 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_11.csv" INTO TABLE hcdm_vectors_split_11 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_11.csv" INTO TABLE hcdm_vectors_split_11 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_12;
 
@@ -1438,7 +1438,7 @@ CREATE TABLE hcdm_vectors_split_12 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_12.csv" INTO TABLE hcdm_vectors_split_12 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_12.csv" INTO TABLE hcdm_vectors_split_12 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_13;
 
@@ -1558,7 +1558,7 @@ CREATE TABLE hcdm_vectors_split_13 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_13.csv" INTO TABLE hcdm_vectors_split_13 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_13.csv" INTO TABLE hcdm_vectors_split_13 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_14;
 
@@ -1678,7 +1678,7 @@ CREATE TABLE hcdm_vectors_split_14 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_14.csv" INTO TABLE hcdm_vectors_split_14 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_14.csv" INTO TABLE hcdm_vectors_split_14 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_15;
 
@@ -1798,7 +1798,7 @@ CREATE TABLE hcdm_vectors_split_15 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_15.csv" INTO TABLE hcdm_vectors_split_15 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_15.csv" INTO TABLE hcdm_vectors_split_15 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_16;
 
@@ -1918,7 +1918,7 @@ CREATE TABLE hcdm_vectors_split_16 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_16.csv" INTO TABLE hcdm_vectors_split_16 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_16.csv" INTO TABLE hcdm_vectors_split_16 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_17;
 
@@ -2038,7 +2038,7 @@ CREATE TABLE hcdm_vectors_split_17 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_17.csv" INTO TABLE hcdm_vectors_split_17 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_17.csv" INTO TABLE hcdm_vectors_split_17 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_18;
 
@@ -2158,7 +2158,7 @@ CREATE TABLE hcdm_vectors_split_18 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_18.csv" INTO TABLE hcdm_vectors_split_18 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_18.csv" INTO TABLE hcdm_vectors_split_18 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_19;
 
@@ -2278,7 +2278,7 @@ CREATE TABLE hcdm_vectors_split_19 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_19.csv" INTO TABLE hcdm_vectors_split_19 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_19.csv" INTO TABLE hcdm_vectors_split_19 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_20;
 
@@ -2398,7 +2398,7 @@ CREATE TABLE hcdm_vectors_split_20 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_20.csv" INTO TABLE hcdm_vectors_split_20 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_20.csv" INTO TABLE hcdm_vectors_split_20 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_21;
 
@@ -2518,7 +2518,7 @@ CREATE TABLE hcdm_vectors_split_21 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_21.csv" INTO TABLE hcdm_vectors_split_21 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_21.csv" INTO TABLE hcdm_vectors_split_21 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_22;
 
@@ -2638,7 +2638,7 @@ CREATE TABLE hcdm_vectors_split_22 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_22.csv" INTO TABLE hcdm_vectors_split_22 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_22.csv" INTO TABLE hcdm_vectors_split_22 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_23;
 
@@ -2758,7 +2758,7 @@ CREATE TABLE hcdm_vectors_split_23 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_23.csv" INTO TABLE hcdm_vectors_split_23 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_23.csv" INTO TABLE hcdm_vectors_split_23 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_24;
 
@@ -2878,7 +2878,7 @@ CREATE TABLE hcdm_vectors_split_24 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_24.csv" INTO TABLE hcdm_vectors_split_24 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_24.csv" INTO TABLE hcdm_vectors_split_24 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
 DROP TABLE IF EXISTS hcdm_vectors_split_25;
 
@@ -2998,5 +2998,5 @@ CREATE TABLE hcdm_vectors_split_25 (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_25.csv" INTO TABLE hcdm_vectors_split_25 FIELDS TERMINATED BY "," IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/split/hcdm_split/hcdm_vectors_split_25.csv" INTO TABLE hcdm_vectors_split_25 FIELDS TERMINATED BY "," IGNORE 1 LINES;
 

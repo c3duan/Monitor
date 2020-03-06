@@ -53,7 +53,8 @@ def main():
         jobs.append(p)
         p.start()
 
-    for job in jobs: job.join()
+    for job in jobs: 
+        job.join()
 
     complete = []
     for result in result_list:

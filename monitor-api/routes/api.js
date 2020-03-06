@@ -310,6 +310,15 @@ router.get('/name/:name', function(req, res, next) {
 
 });
 
+router.get('/event', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+
+	var db = req.app.get('db');
+	var name = req.params.name;
+	var q = "SELECT event FROM event;"
+	db.query(q, function(error, results, fields) { res.json(results); });
+});
+
 
 router.post('/selection', function(req, res, next) {
 
@@ -317,11 +326,11 @@ router.post('/selection', function(req, res, next) {
 
 	var data = req.body.selectionData;
     var name = data['stream'];
-    var start = data['start'];
-    var end = data['end'];
+    var offset = 6 * 60 * 60;
+    var start = data['start'] - offset;
+    var end = data['end'] + offset;
 
-    var q = "SELECT * FROM stream_data WHERE name='" + name + "' ORDER BY TIMESTAMP DESC;";
-    // "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + 
+    var q = "SELECT * FROM stream_data WHERE name='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
 	var db = req.app.get('db');
 	db.query(q, function(error, results, fields) { 
         res.json(results); 

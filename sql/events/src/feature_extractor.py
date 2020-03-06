@@ -112,7 +112,7 @@ def main():
     ####################################
 
     vectors, names, columns = [], [], None
-    for stream in tqdm(streams[:10]):
+    for stream in tqdm(streams):
 
         filename = '%s/%s' % (SPLIT_DATA, stream)
         streamname = stream.split('.csv')[0]
@@ -132,7 +132,7 @@ def main():
                     start, end = subset[:, 0][0], subset[:, 0][-1]
                     timeseries_helper = data_feature_extractor(np.transpose(subset))
 
-                    # GROUPING 1
+                    # # GROUPING 1
                     groups = [
                         timeseries_helper.getF_2019_Pandey_single()[1],
                     ]
@@ -149,14 +149,15 @@ def main():
                     # #     timeseries_helper.getF_2019_Pandey_split(25)[1]
                     # # ]
 
-                    # # GROUPING 4
-                    # # groups = [
-                    # #     timeseries_helper.getF_2019_Pandey_single()[1],
-                    # #     timeseries_helper.getF_2019_Pandey_split(5)[1]
-                    # #     timeseries_helper.getF_2019_Pandey_split(25)[1]
-                    # # ]
+                    # GROUPING 4
+                    # groups = [
+                    #     timeseries_helper.getF_2019_Pandey_single()[1],
+                    #     timeseries_helper.getF_2019_Pandey_split(5)[1],
+                    #     timeseries_helper.getF_2019_Pandey_split(25)[1]
+                    # ]
 
-                    if not columns: columns = timeseries_helper.columns
+                    if not columns: 
+                        columns = timeseries_helper.columns
                     vectors.append([value for features in groups for value in features])
                     names.append([streamname, start, end])
 

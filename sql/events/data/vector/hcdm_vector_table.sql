@@ -118,7 +118,7 @@ CREATE TABLE hcdm_vectors_start (
 	F110 DOUBLE
 );
 
-LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Monitor/UVAMonitor-master/sql/events/data/vector/hcdm_vectors.csv" INTO TABLE hcdm_vectors_start FIELDS TERMINATED BY ",";
+LOAD DATA LOCAL INFILE "/Users/chengzhuduan/CSE/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/hcdm_vectors.csv" INTO TABLE hcdm_vectors_start FIELDS TERMINATED BY ",";
 
 DROP TABLE IF EXISTS hcdm_vectors;
 
