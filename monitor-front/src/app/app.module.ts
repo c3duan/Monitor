@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatRadioModule } from '@angular/material';
 import { SwiperModule, SwiperConfigInterface, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { HelpComponent } from './help/help.component';
 import { LoggerModule } from 'ngx-logger';
@@ -42,7 +42,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 		ChartComponent,
 		FormComponent,
 		AppComponent,
-		HelpComponent
+		HelpComponent,
 	],
 	imports: [
         MatProgressSpinnerModule,
@@ -61,7 +61,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 		MatIconModule,
 		FormsModule,
 		DragDropModule,
-		MatCheckboxModule,
+		MatRadioModule,
 		MatToolbarModule,
 		MatSidenavModule,
 		MatListModule,

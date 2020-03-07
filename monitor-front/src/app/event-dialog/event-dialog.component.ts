@@ -22,6 +22,7 @@ export class EventDialogComponent implements OnInit {
     name;
     start;
     end;
+    events;
 
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<EventDialogComponent>, private eventService: EventService) { }
@@ -32,6 +33,7 @@ export class EventDialogComponent implements OnInit {
         this.name = this.data.name;
         this.start = this.data.start;
         this.end = this.data.end;
+        this.events = this.data.events;
 
     }
 
@@ -44,6 +46,7 @@ export class EventDialogComponent implements OnInit {
         var end = this.end;
 
         let success = this.eventService.submitEventData(eventName, streamName, start, end).then(success => {
+            this.events.push(eventName);
             this.dialogRef.close();
         });
 

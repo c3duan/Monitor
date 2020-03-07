@@ -11,8 +11,16 @@
         <mat-tab-group (selectedTabChange)="get_chart($event)">
             <mat-tab *ngFor="let stream of streams" label={{stream.stream}}>
                 <ng-template matTabContent>
-                    <button mat-icon-button (click)="openCurrentEventDialog(stream.stream + '_dialog')"><mat-icon>add_comment</mat-icon></button>
-                    <mat-checkbox *ngIf="showCheckBox" [checked]="stream.checked" (change)="onChange(stream)">Does this result match?</mat-checkbox>
+                    <div class="actions">
+                        <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                        <section *ngIf="showMatch" class="check-section">
+                            <label class="check">Does the result match?:</label>
+                            <mat-radio-group (change)="onRadioChange($event, stream)" [(ngModel)]="stream.match">
+                                <mat-radio-button class="check" value="Yes">Yes</mat-radio-button>
+                                <mat-radio-button class="check" value="No">No</mat-radio-button>
+                            </mat-radio-group>
+                        </section>
+                    </div>
                     <div id="{{stream.stream}}_dialog"></div>
                 </ng-template>
             </mat-tab>

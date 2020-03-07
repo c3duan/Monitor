@@ -12,3 +12,20 @@
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 }
+
+.check-section {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	height: 60px;
+  }
+  
+.check {
+	margin: 0 10px;
+}
+
+.actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

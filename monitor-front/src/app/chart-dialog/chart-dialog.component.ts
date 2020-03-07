@@ -16,7 +16,7 @@ export class ChartDialogComponent implements OnInit {
     value;
     streams;
     stream;
-    showCheckBox;
+    showMatch;
     checked;
     starts;
     ends;
@@ -37,7 +37,7 @@ export class ChartDialogComponent implements OnInit {
         this.value = this.data.value;
         this.streams = this.data.streams;
         this.stream = this.streams[0].stream;
-        this.showCheckBox = this.data.showCheckBox;
+        this.showMatch = this.data.showMatch;
         this.checked = this.data.checked;
         this.starts = this.data.start;
         this.ends = this.data.end;
@@ -165,9 +165,7 @@ export class ChartDialogComponent implements OnInit {
 
     }
 
-    onChange(stream) {
-        stream.checked = !stream.checked;
+    onRadioChange(event, stream) {
+        stream.value = event.value;
     }
-
-
 }
