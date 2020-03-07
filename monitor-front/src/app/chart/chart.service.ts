@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable'
 import { Injectable } from '@angular/core';
 import { GlobVars } from '../global';
-import { stringify } from 'querystring';
+import Plotly from 'plotly.js';
 
 @Injectable()
 export class ChartService {
@@ -104,7 +104,7 @@ export class ChartService {
 		return streams.map(stream => {
 			return {
 				'stream': stream,
-				'checked': false
+				'match': 'unknown'
 			};
 		})
 	}

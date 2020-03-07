@@ -39,7 +39,19 @@ ul.charts {
 	box-sizing:border-box;
 	display:inline-block;
 	height:100%;
-	padding-left:180px;
+	padding-left:30px;
+}
+
+#swiper-box {
+	width: 600px;
+	height: 500px;
+	padding: 0 60px 40px 60px;
+	background-color: #fafafa;
+	border-radius: 0px;
+	border-width: 0px;
+	box-shadow: none;
+	margin: 10px 20px;
+	position: relative;
 }
 
 ul.charts li {
@@ -48,6 +60,15 @@ ul.charts li {
 	box-shadow: 0 0 2px grey;
 	margin: 10px 20px;
 	width: 45%;
+	display:block;
+	float:left;
+}
+
+.slider {
+	background-color: #ffffff;
+	border-radius:6px;
+	box-shadow: 0 0 2px grey;
+	width: 100%;
 	display:block;
 	float:left;
 }
@@ -128,7 +149,19 @@ li.search_page a:hover{
 	width: 120px;
 }
 
-swiper {
-	width: 400px;
-	height: 500px;
+.check-section {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	height: 60px;
+  }
+  
+.check {
+	margin: 0 10px;
+}
+
+.actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }

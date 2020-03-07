@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartService } from './chart.service';
 import { LoggerService } from '../logger/logger.service';
 import { EventService } from '../event-dialog/event.service';
-import { SwiperComponent, SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
+import { SwiperComponent, SwiperConfigInterface, SwiperPaginationInterface, SwiperNavigationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -24,24 +24,34 @@ export class ChartComponent implements OnInit {
     pages;
     events = [];
 
-    public config: SwiperConfigInterface = {
+    navigation: SwiperNavigationInterface = {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    };
+    
+    pagination: SwiperPaginationInterface = {
+        el: '.swiper-pagination',
+        type: 'fraction'
+    };
+
+    scrollbar: SwiperScrollbarInterface = {
+        el: '.swiper-scrollbar',
+        hide: false,
+        draggable: true
+    };
+
+    config: SwiperConfigInterface = {
         a11y: true,
         direction: 'horizontal',
         slidesPerView: 1,
+        spaceBetween: 30,
         keyboard: true,
-        mousewheel: true,
-        scrollbar: false,
-        navigation: true,
-        pagination: false
-    };
-    
-    private pagination: SwiperPaginationInterface = {
-        el: '.swiper-pagination',
-        type: 'fraction',
-        clickable: true,
-        hideOnClick: false
+        scrollbar: this.scrollbar,
+        navigation: this.navigation,
+        pagination: this.pagination
     };
 
+    
     constructor(
         private chartService: ChartService, 
         private loggerService: LoggerService,
@@ -66,8 +76,9 @@ export class ChartComponent implements OnInit {
 
 	search(query) {
 
-        if (this.all_groups !== null) {
+        if (this.all_groups && this.isEvent) {
             this.loggerService.log(this.all_groups);
+            this.loggerService.logToCsvFile(this.all_groups);
         }
 
         this.all_groups = null;
@@ -80,6 +91,8 @@ export class ChartComponent implements OnInit {
 
             if (query.includes('event')) {
                 this.isEvent = true;
+            } else {
+                this.isEvent = false;
             }
 
             this.chartService.search(query, this);
@@ -97,11 +110,11 @@ export class ChartComponent implements OnInit {
 
         if (this.isEvent) {
             for (var row_index = 0; row_index <= 1; row_index++) {
-                this.getEventChart(row_index as number);
+                this.getEventChart(row_index);
             }
         } else {
-            for (var row_index in this.vis_groups) {
-                var name = this.vis_groups[row_index]['streams'][0].stream;
+            for (var row in this.vis_groups) {
+                var name = this.vis_groups[row]['streams'][0].stream;
                 this.chartService.getChartData(name, name, this);
             }
         }
@@ -111,7 +124,7 @@ export class ChartComponent implements OnInit {
     }
 
     onIndexChange(index: number) {
-        this.getEventChart(index);
+        this.getEventChart(index + 1);
     }
 
     getEventChart(index: number) {
@@ -128,8 +141,7 @@ export class ChartComponent implements OnInit {
 	}
 
 
-    openDialog(i, group) {
-
+    openDialog(display: boolean, group) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.height = "800px";
@@ -138,7 +150,7 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
-            'showCheckBox': this.isEvent && i !== 0,
+            'showMatch': this.isEvent && display,
             'start': group.start,
             'end': group.end
         };
@@ -160,15 +172,16 @@ export class ChartComponent implements OnInit {
         dialogConfig.data = {
             'name': name,
             'start': start,
-            'end': end
+            'end': end,
+            'events': this.events
         }
         dialogConfig.disableClose = true;
 
         this.dialog.open(EventDialogComponent, dialogConfig);
     }
 
-    onChange(stream) {
-        stream.checked = !stream.checked;
+    onRadioChange(event, stream) {
+        stream.match = event.value;
     }
 
 }

@@ -26,6 +26,8 @@
     "@angular/router": "^7.0.2",
     "codelyzer": "^4.5.0",
     "core-js": "^2.5.7",
+    "ngx-logger": "^4.1.2",
+    "ngx-swiper-wrapper": "^7.2.1",
     "plotly": "^1.0.6",
     "plotly.js": "^1.42.2",
     "rxjs": "^6.3.3",
