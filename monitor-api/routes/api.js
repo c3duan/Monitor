@@ -327,8 +327,8 @@ router.post('/selection', function(req, res, next) {
 	var data = req.body.selectionData;
     var name = data['stream'];
     var offset = 6 * 60 * 60;
-    var start = data['start'] - offset;
-    var end = data['end'] + offset;
+    var start = parseInt(data['start']) - offset;
+    var end = parseInt(data['end']) + offset;
 
     var q = "SELECT * FROM stream_data WHERE name='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
 	var db = req.app.get('db');

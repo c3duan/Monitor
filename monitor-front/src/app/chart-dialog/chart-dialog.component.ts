@@ -161,8 +161,10 @@ export class ChartDialogComponent implements OnInit {
         }
         dialogConfig.disableClose = true;
 
-        this.dialog.open(EventDialogComponent, dialogConfig);
-
+        let dialogRef = this.dialog.open(EventDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            this.chartService.onFinishedEventSelect(name + '_dialog');
+        });
     }
 
     onRadioChange(event, stream) {

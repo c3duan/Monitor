@@ -45,6 +45,7 @@ export class ChartComponent implements OnInit {
         direction: 'horizontal',
         slidesPerView: 1,
         spaceBetween: 30,
+        simulateTouch: false,
         keyboard: true,
         scrollbar: this.scrollbar,
         navigation: this.navigation,
@@ -74,11 +75,16 @@ export class ChartComponent implements OnInit {
         });
     }
 
+    saveToCsvFile() {
+        if (this.all_groups) {
+            this.loggerService.logToCsvFile(this.all_groups);
+        }
+    }
+
 	search(query) {
 
-        if (this.all_groups && this.isEvent) {
+        if (this.all_groups) {
             this.loggerService.log(this.all_groups);
-            this.loggerService.logToCsvFile(this.all_groups);
         }
 
         this.all_groups = null;
@@ -177,7 +183,10 @@ export class ChartComponent implements OnInit {
         }
         dialogConfig.disableClose = true;
 
-        this.dialog.open(EventDialogComponent, dialogConfig);
+        let dialogRef = this.dialog.open(EventDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            this.chartService.onFinishedEventSelect(name);
+        });
     }
 
     onRadioChange(event, stream) {

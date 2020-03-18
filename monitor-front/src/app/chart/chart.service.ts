@@ -182,7 +182,9 @@ export class ChartService {
 		const shape = this.getShape(start, end);
 		layout.shapes.push(shape);
 		const key = `shapes[${layout.shapes.length-1}]`;
-		Plotly.relayout(id, { key: shape })
+		let update = {}
+		update[key] = shape;
+		Plotly.relayout(id, update)
 
 		if (id.search('dialog') !== -1) {
 			id = id.substring(0, id.length-7);
@@ -190,6 +192,15 @@ export class ChartService {
 		chartComponent.openEventDialog(id, start, end);
 	}
 
+	onFinishedEventSelect(id) {
+		if (this.charts[id]) {
+			let i = this.charts[id].layout.shapes.length - 1;
+			let key = `shapes[${i}].visible`;
+			let update = {}
+			update[key] = false;
+			Plotly.relayout(id, update);
+		}
+	}
 
     getChartData(name, id, chartComponent, layout?, config?): void {
         var url = GlobVars.baseUrl + ':3000/api/name/' + name
@@ -210,11 +221,6 @@ export class ChartService {
         }).subscribe(rows => {
 			this.drawPlot(id, rows, chartComponent, start, end, layout, config);
 		});
-
-		// var url = GlobVars.baseUrl + ':3000/api/name/' + name
-		// this.http.get(url).subscribe(rows => {
-		// 	this.drawPlot(id, rows, chartComponent, start, end, layout, config);
-		// });
 	}
 
 	getEventRange(stream) {

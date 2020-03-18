@@ -43,7 +43,7 @@ ul.charts {
 }
 
 #swiper-box {
-	width: 600px;
+	width: 700px;
 	height: 500px;
 	padding: 0 60px 40px 60px;
 	background-color: #fafafa;
@@ -62,6 +62,7 @@ ul.charts li {
 	width: 45%;
 	display:block;
 	float:left;
+	padding: 0;
 }
 
 .slider {

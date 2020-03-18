@@ -8,6 +8,7 @@
                 <button mat-icon-button (click)="search(query.value)"><mat-icon>search</mat-icon></button>
             </span>
             <span class="spacer"></span>
+            <span><button *ngIf="isEvent" mat-icon-button (click)="saveToCsvFile()">Save</button></span>
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container class="sidenav-container">
@@ -43,9 +44,8 @@
                             </mat-tab>
                         </mat-tab-group>
                     </li>
-                    <li id="swiper-box" style="width: 700px; height: 500px;">
-                        <div class="swiper-container slider" [swiper]="config" (indexChange)="onIndexChange($event)" [disabled]="false">
-                            <div class="swiper-wrapper" style="width: 700px; height: 500px;">
+                    <li id="swiper-box">
+                        <div class="swiper-container slider" [swiper]="config" (indexChange)="onIndexChange($event)">                            <div class="swiper-wrapper" style="width: 700px; height: 500px;">
                                 <div class="swiper-slide" *ngFor="let group of all_groups | slice:1; let i = index">
                                     <div class="group_title">
                                         {{group.group_name}} {{group.group_val}}

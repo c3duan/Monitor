@@ -18,7 +18,6 @@ export class EventDialogComponent implements OnInit {
         endControl: new FormControl('')
     });
 
-
     name;
     start;
     end;
@@ -29,7 +28,6 @@ export class EventDialogComponent implements OnInit {
 
 
     ngOnInit() {
-
         this.name = this.data.name;
         this.start = this.data.start;
         this.end = this.data.end;
