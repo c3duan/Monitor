@@ -1,5 +1,5 @@
-UVAMonitor
-Search engine API and front-end for displaying the status of monitors from buildings across the University of Virginia Campus.
+UCSDMonitor
+Search engine API and front-end for displaying the status of monitors from buildings across the University of California, San Diego.
 
 monitor-api
 API with endpoints for accessing stream data

@@ -27,9 +27,9 @@ export class ChartService {
 
 	default_layout = { 
 		shapes: [],
-		height: 300,
+		height: 350,
 		selectdirection: 'h',
-		dragmode: 'select',
+		dragmode: 'pan',
 		xaxis: { nticks: 10, automargin: true },
 		yaxis: { automargin: true },
 		plot_bgcolor: '#ffffff',
@@ -91,6 +91,7 @@ export class ChartService {
 			chartComponent.all_groups = all_data;
 			if (!chartComponent.isEvent) {
 				chartComponent.vis_groups = all_data[0];
+				console.log(chartComponent.vis_groups);
 				chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
 			}
 			chartComponent.no_results = all_data.length > 0 ? false : true;
@@ -121,7 +122,7 @@ export class ChartService {
 			x1: end,
 			y1: 1,
 			fillcolor: '#d3d3d3',
-			opacity: 0.5,
+			opacity: 0.7,
 			line: {
 				width: 0
 			}
@@ -131,14 +132,22 @@ export class ChartService {
 	drawPlot(id: string, rows: any, chartComponent, start?, end?, layout?, config?) {
 		var x = []; 
 		var y = [];
+		var anomalies: Set<number> = new Set();
 
 		for (var row_index in rows) {
 			x.push(new Date(rows[row_index]['timestamp'] * 1000).toLocaleString());
 			y.push(rows[row_index]['value']);
+			if ('anomaly' in rows[row_index] && rows[row_index]['anomaly']) {
+				anomalies.add(Math.max(0, parseInt(row_index)-1));
+				anomalies.add(parseInt(row_index));
+				anomalies.add(Math.min(rows.length-1, parseInt(row_index)+1));
+			}
 		}
 
 		x = x.reverse();
 		y = y.reverse();
+		let anomIndices: number[] = Array.from(anomalies).map(idx => rows.length - 1 - idx).reverse();
+		
 		if (!(id in this.charts)) {
 			this.charts[id] = { 
 				layout: JSON.parse(JSON.stringify(this.default_layout)),
@@ -150,6 +159,8 @@ export class ChartService {
 			const new_layout = Object.assign(this.charts[id].layout, layout);
 			this.charts[id].layout = new_layout;
 		}
+		console.log(layout);
+		console.log(this.charts[id].layout);
 
 		if (config) {
 			const new_config = Object.assign(this.charts[id].config, config);
@@ -161,6 +172,29 @@ export class ChartService {
 			end = new Date(end * 1000).toLocaleString();
 			const shape = this.getShape(start, end);
 			this.charts[id].layout.shapes.push(shape);
+		}
+
+		if (anomIndices.length > 0) {
+			let intervals = [];
+			let startIdx = 0;
+			let endIdx = 0;
+			let index = 1;
+			while(index < anomIndices.length) {
+				if (anomIndices[index] == anomIndices[index-1] + 1) {
+					endIdx = index;
+				} else {
+					intervals.push({ start: anomIndices[startIdx], end: anomIndices[endIdx] });
+					startIdx = index;
+					endIdx = startIdx;
+				}
+				index++;
+			}
+
+			for (let idx in intervals) {
+				let { start, end } = intervals[idx];
+				const shape = this.getShape(x[start], x[end]);
+				this.charts[id].layout.shapes.push(shape);
+			}
 		}
 
 		Plotly.newPlot(
@@ -220,6 +254,13 @@ export class ChartService {
             }
         }).subscribe(rows => {
 			this.drawPlot(id, rows, chartComponent, start, end, layout, config);
+		});
+	}
+
+	getChartDataEval(name, type, id, chartComponent, layout?, config?): void {
+        var url = GlobVars.baseUrl + ':3000/api/evalStream/' + type + '/' + name;
+		this.http.get(url).subscribe(rows => {
+			this.drawPlot(id, rows, chartComponent, null, null, layout, config);
 		});
 	}
 

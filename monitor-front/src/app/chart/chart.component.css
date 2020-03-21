@@ -59,6 +59,7 @@ ul.charts li {
 	border-radius:6px;
 	box-shadow: 0 0 2px grey;
 	margin: 10px 20px;
+	max-width: 1000px;
 	width: 45%;
 	display:block;
 	float:left;

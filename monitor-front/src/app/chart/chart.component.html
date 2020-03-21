@@ -53,7 +53,7 @@
                                     </div>
                                     <mat-tab-group (selectedTabChange)="getChart($event)">
                                         <mat-tab *ngFor="let stream of group.streams" label={{stream.stream}}>
-                                            <ng-template matTabContent>
+                                            <ng-template matTabContent style="overflow: scroll;">
                                                 <div class="actions">
                                                     <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
                                                     <section class="check-section">
@@ -83,11 +83,11 @@
                             {{group.group_name}} {{group.group_val}}
                             <button mat-icon-button (click)="openDialog(i, group)"><mat-icon>open_in_new</mat-icon></button>
                         </div>
-                        <mat-tab-group (selectedTabChange)="getChart($event)">
+                        <mat-tab-group (selectedTabChange)="getChart($event, group.group_name)">
                             <mat-tab *ngFor="let stream of group.streams" label={{stream.stream}}>
                                 <ng-template matTabContent>
                                     <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
-                                    <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                                    <button *ngIf="!isEval" mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
                                     <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
                                 </ng-template>
                             </mat-tab>

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var eval_types = ['ampds', 'dataport', 'eco', 'refit'];
 
 
 function splitByOperator(query) {
@@ -34,8 +35,19 @@ function parseQuery(query) {
 
     if (query.includes("event")) {
 
-        parsed = { "event": true }
+        parsed = { 
+            "event": true,
+            "eval": false 
+        };
         
+    } else if (query.includes("eval")) {
+        splits = query.split(" ");
+        parsed = { 
+            "event": false,
+            "eval": true,
+            "types": (splits.length > 1) ? splits.splice(1) : eval_types
+        };
+
     } else {
 
         getGroupBy = query.split("by");
@@ -55,12 +67,14 @@ function parseQuery(query) {
             "operatorSearchTerms": operatorSearchTerms, 
             "attributes": attributes,
             "event": false,
+            "eval": false,
             "attributeValue": groupByValue
-        }
+        };
 
     }
+    console.log(parsed);
 
-    return parsed
+    return parsed;
 
 }
 
@@ -224,14 +238,21 @@ router.get('/search/:query', async (req, res, next) => {
     var db = req.app.get('db');
     var query = req.params.query; 
     var parsed = parseQuery(query);
+    console.log(parsed);
     var operatorSearchTerms = parsed["operatorSearchTerms"];
     var attributes = parsed["attributes"];
     var eventRequest = parsed["event"];
+    var evalRequest = parsed["eval"];
     var attributeValue = parsed["attributeValue"];
 
     if (eventRequest) {
 
         var data = await getEventData(req, query);
+
+    } else if (evalRequest) {
+
+        var types = parsed["types"];
+        var data = await getMultiEvalTypesData(db, types);
 
     } else {
 
@@ -390,7 +411,7 @@ router.get('/translateQuery/:query', async function(req, res, next) {
     var query = req.params.query;
     var parsed = parseQuery(query);
 
-    if (parsed['event']) {
+    if (parsed['event'] || parsed['eval']) {
 
         var newQuery = query;
 
@@ -520,6 +541,77 @@ router.post('/submitAttribute', function(req, res, next) {
         }
     });
 
+});
+
+function getEvalStreamData(db, table) {
+    
+    return new Promise((resolve, reject) => {
+
+        var q = "SELECT DISTINCT stream FROM " + table + ";";
+        var data = []; 
+        let streams = asyncDbQuery(db, q).then(streams => { 
+
+            for (var i = 0; i < streams.length; i++ ) { 
+                data.push({ 
+                    'group_name': table, 
+                    'group_val': '',
+                    'streams': [ streams[i]['stream'] ]
+                });
+            }
+
+            resolve(data);
+
+        });
+
+    });
+
+}
+
+function getMultiEvalTypesData(db, types) {
+    return new Promise(async(resolve, reject) => {
+        data = {}
+        for (var tidx in types) {
+            var table = types[tidx];
+            var result = await getEvalStreamData(db, table);
+            for (ridx in result) {
+                var group_name = result[ridx]['group_name'];
+                if (group_name in data) { 
+                    data[group_name]['streams'].push.apply(
+                        data[group_name]['streams'], result[ridx]['streams']
+                    ); 
+                } 
+                else { 
+                    data[group_name] = { 
+                        'group_val': '',
+                        'streams': result[ridx]['streams'] 
+                    }; 
+                }
+            }
+        }
+        var data = Object.keys(data).map(function(key) {
+            return {
+                'group_name': key,
+                ...data[key]
+            }
+        });
+
+        resolve(data);
+    });
+}
+
+
+router.get('/evalStream/:type/:stream', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+
+	var db = req.app.get('db');
+	var table = req.params.type;
+    var stream = req.params.stream;
+
+    var q = "SELECT stream, timestamp, power AS value, anomaly FROM " + table + " WHERE stream='" + stream + "' ORDER BY TIMESTAMP DESC;";
+    console.log(q)
+    db.query(q, function(error, results, fields) { 
+        res.json(results); 
+    });
 });
 
 module.exports = router;

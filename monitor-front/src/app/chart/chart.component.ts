@@ -6,7 +6,6 @@ import { ChartService } from './chart.service';
 import { LoggerService } from '../logger/logger.service';
 import { EventService } from '../event-dialog/event.service';
 import { SwiperComponent, SwiperConfigInterface, SwiperPaginationInterface, SwiperNavigationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
-import { SwiperOptions } from 'swiper';
 
 @Component({
 	selector: 'app-chart',
@@ -16,12 +15,13 @@ import { SwiperOptions } from 'swiper';
 export class ChartComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef?: SwiperComponent;
 
-    all_groups;
-    vis_groups;
-    isEvent;
-    no_results;
-    waiting;
-    pages;
+    all_groups: any[];
+    vis_groups: any[];
+    isEvent: boolean;
+    isEval: boolean;
+    no_results: boolean;
+    waiting: boolean;
+    pages: number[];
     events = [];
 
     navigation: SwiperNavigationInterface = {
@@ -66,6 +66,7 @@ export class ChartComponent implements OnInit {
         this.all_groups = null;
         this.vis_groups = null;
         this.isEvent = false;
+        this.isEval = false;
         this.waiting = false;
         this.pages = null;
         this.eventService.getEventData().subscribe(rows => {
@@ -101,15 +102,25 @@ export class ChartComponent implements OnInit {
                 this.isEvent = false;
             }
 
+            if (query.includes('eval')) {
+                this.isEval = true;
+            } else {
+                this.isEval = false;
+            }
+
             this.chartService.search(query, this);
         });
 
 	}
 
 
-	getChart(event: MatTabChangeEvent) {
-		var stream = event.tab.textLabel;
-        this.chartService.getChartData(stream, stream, this);
+	getChart(event: MatTabChangeEvent, group_name) {
+        var stream = event.tab.textLabel;
+        if (this.isEval) {
+            this.chartService.getChartDataEval(stream, group_name, stream, this);
+        } else {
+            this.chartService.getChartData(stream, stream, this);
+        }
 	}
 
     resetCharts(): void {
@@ -121,7 +132,12 @@ export class ChartComponent implements OnInit {
         } else {
             for (var row in this.vis_groups) {
                 var name = this.vis_groups[row]['streams'][0].stream;
-                this.chartService.getChartData(name, name, this);
+                if (this.isEval) {
+                    var type = this.vis_groups[row]['group_name'];
+                    this.chartService.getChartDataEval(name, type, name, this);
+                } else {
+                    this.chartService.getChartData(name, name, this);
+                }
             }
         }
 
@@ -156,6 +172,8 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
+            'isEval': this.isEval,
+            'groupName': group.group_name,
             'showMatch': this.isEvent && display,
             'start': group.start,
             'end': group.end
