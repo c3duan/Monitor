@@ -17,7 +17,7 @@ export class ChartDialogComponent implements OnInit {
     streams;
     stream;
     groupName;
-    isEval;
+    isAniyama;
     showMatch;
     checked;
     starts;
@@ -40,7 +40,7 @@ export class ChartDialogComponent implements OnInit {
         this.streams = this.data.streams;
         this.stream = this.streams[0].stream;
         this.groupName = this.data.groupName;
-        this.isEval = this.data.isEval;
+        this.isAniyama = this.data.isAniyama;
         this.showMatch = this.data.showMatch;
         this.checked = this.data.checked;
         this.starts = this.data.start;
@@ -48,7 +48,7 @@ export class ChartDialogComponent implements OnInit {
         this.atts = [];
         var stream_label = this.stream + '_dialog';
 
-        if (!this.isEval) {
+        if (!this.isAniyama) {
             let attributes = this.chartDialogService.getChartAttributes(this.stream).then(attributes => {
                 for (var att_index in attributes) {
                     this.atts.push({
@@ -67,7 +67,7 @@ export class ChartDialogComponent implements OnInit {
                 this.chartService.getChartDataEvent(this.stream, stream_label, start, end, this, { height: 400 });
             }
         } else {
-            this.chartService.getChartDataEval(this.stream, this.groupName, stream_label, this, { height: 500 });
+            this.chartService.getChartDataAniyama(this.stream, this.groupName, stream_label, this, { height: 500 });
         }
 
     }
@@ -78,7 +78,7 @@ export class ChartDialogComponent implements OnInit {
 		this.stream = event.tab.textLabel;
         var stream_label = this.stream + '_dialog';
 
-        if (!this.isEval) {
+        if (!this.isAniyama) {
             this.atts = [];
             let attributes = this.chartDialogService.getChartAttributes(this.stream).then(attributes => {
                 for (var att_index in attributes) {
@@ -92,7 +92,7 @@ export class ChartDialogComponent implements OnInit {
 
             this.chartService.getChartData(this.stream, stream_label, this);
         } else {
-            this.chartService.getChartDataEval(this.stream, this.groupName, stream_label, this, { height: 500 });
+            this.chartService.getChartDataAniyama(this.stream, this.groupName, stream_label, this, { height: 500 });
         }
 
 	}

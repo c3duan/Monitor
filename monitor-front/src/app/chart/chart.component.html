@@ -87,7 +87,7 @@
                             <mat-tab *ngFor="let stream of group.streams" label={{stream.stream}}>
                                 <ng-template matTabContent>
                                     <!-- <button mat-icon-button (click)="logEvent(stream.stream)"><mat-icon>add_comment</mat-icon></button> -->
-                                    <button *ngIf="!isEval" mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                                    <button *ngIf="!isAniyama" mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
                                     <div id="{{stream.stream}}" style="padding-bottom: 20px;"></div>
                                 </ng-template>
                             </mat-tab>

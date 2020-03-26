@@ -257,8 +257,8 @@ export class ChartService {
 		});
 	}
 
-	getChartDataEval(name, type, id, chartComponent, layout?, config?): void {
-        var url = GlobVars.baseUrl + ':3000/api/evalStream/' + type + '/' + name;
+	getChartDataAniyama(name, type, id, chartComponent, layout?, config?): void {
+        var url = GlobVars.baseUrl + ':3000/api/AniyamaStream/' + type + '/' + name;
 		this.http.get(url).subscribe(rows => {
 			this.drawPlot(id, rows, chartComponent, null, null, layout, config);
 		});

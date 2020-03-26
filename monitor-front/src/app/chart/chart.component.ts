@@ -18,7 +18,7 @@ export class ChartComponent implements OnInit {
     all_groups: any[];
     vis_groups: any[];
     isEvent: boolean;
-    isEval: boolean;
+    isAniyama: boolean;
     no_results: boolean;
     waiting: boolean;
     pages: number[];
@@ -66,7 +66,7 @@ export class ChartComponent implements OnInit {
         this.all_groups = null;
         this.vis_groups = null;
         this.isEvent = false;
-        this.isEval = false;
+        this.isAniyama = false;
         this.waiting = false;
         this.pages = null;
         this.eventService.getEventData().subscribe(rows => {
@@ -92,7 +92,8 @@ export class ChartComponent implements OnInit {
         this.vis_groups = null;
         this.waiting = true;
         this.pages = null;
-        
+
+        query = query.toLowerCase();
         let translated = this.chartService.translateQuery(query).then(translated => {
             var query = translated['newQuery'];
 
@@ -102,10 +103,10 @@ export class ChartComponent implements OnInit {
                 this.isEvent = false;
             }
 
-            if (query.includes('eval')) {
-                this.isEval = true;
+            if (query.includes('aniyama')) {
+                this.isAniyama = true;
             } else {
-                this.isEval = false;
+                this.isAniyama = false;
             }
 
             this.chartService.search(query, this);
@@ -116,8 +117,8 @@ export class ChartComponent implements OnInit {
 
 	getChart(event: MatTabChangeEvent, group_name) {
         var stream = event.tab.textLabel;
-        if (this.isEval) {
-            this.chartService.getChartDataEval(stream, group_name, stream, this);
+        if (this.isAniyama) {
+            this.chartService.getChartDataAniyama(stream, group_name, stream, this);
         } else {
             this.chartService.getChartData(stream, stream, this);
         }
@@ -132,9 +133,9 @@ export class ChartComponent implements OnInit {
         } else {
             for (var row in this.vis_groups) {
                 var name = this.vis_groups[row]['streams'][0].stream;
-                if (this.isEval) {
+                if (this.isAniyama) {
                     var type = this.vis_groups[row]['group_name'];
-                    this.chartService.getChartDataEval(name, type, name, this);
+                    this.chartService.getChartDataAniyama(name, type, name, this);
                 } else {
                     this.chartService.getChartData(name, name, this);
                 }
@@ -172,7 +173,7 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
-            'isEval': this.isEval,
+            'isAniyama': this.isAniyama,
             'groupName': group.group_name,
             'showMatch': this.isEvent && display,
             'start': group.start,

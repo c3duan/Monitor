@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var eval_types = ['ampds', 'dataport', 'eco', 'refit'];
+var aniyama_types = ['ampds', 'dataport', 'eco', 'refit'];
 
 
 function splitByOperator(query) {
@@ -37,15 +37,15 @@ function parseQuery(query) {
 
         parsed = { 
             "event": true,
-            "eval": false 
+            "aniyama": false 
         };
         
-    } else if (query.includes("eval")) {
+    } else if (query.includes("aniyama")) {
         splits = query.split(" ");
         parsed = { 
             "event": false,
-            "eval": true,
-            "types": (splits.length > 1) ? splits.splice(1) : eval_types
+            "aniyama": true,
+            "types": (splits.length > 1) ? splits.splice(1) : aniyama_types
         };
 
     } else {
@@ -67,7 +67,7 @@ function parseQuery(query) {
             "operatorSearchTerms": operatorSearchTerms, 
             "attributes": attributes,
             "event": false,
-            "eval": false,
+            "aniyama": false,
             "attributeValue": groupByValue
         };
 
@@ -242,17 +242,17 @@ router.get('/search/:query', async (req, res, next) => {
     var operatorSearchTerms = parsed["operatorSearchTerms"];
     var attributes = parsed["attributes"];
     var eventRequest = parsed["event"];
-    var evalRequest = parsed["eval"];
+    var aniyamaRequest = parsed["aniyama"];
     var attributeValue = parsed["attributeValue"];
 
     if (eventRequest) {
 
         var data = await getEventData(req, query);
 
-    } else if (evalRequest) {
+    } else if (aniyamaRequest) {
 
         var types = parsed["types"];
-        var data = await getMultiEvalTypesData(db, types);
+        var data = await getMultiAniyamaTypesData(db, types);
 
     } else {
 
@@ -411,7 +411,7 @@ router.get('/translateQuery/:query', async function(req, res, next) {
     var query = req.params.query;
     var parsed = parseQuery(query);
 
-    if (parsed['event'] || parsed['eval']) {
+    if (parsed['event'] || parsed['aniyama']) {
 
         var newQuery = query;
 
@@ -543,17 +543,17 @@ router.post('/submitAttribute', function(req, res, next) {
 
 });
 
-function getEvalStreamData(db, table) {
+function getAniyamaStreamData(db, type) {
     
     return new Promise((resolve, reject) => {
 
-        var q = "SELECT DISTINCT stream FROM " + table + ";";
+        var q = "SELECT DISTINCT stream FROM aniyama WHERE type='" + type + "';";
         var data = []; 
         let streams = asyncDbQuery(db, q).then(streams => { 
 
             for (var i = 0; i < streams.length; i++ ) { 
                 data.push({ 
-                    'group_name': table, 
+                    'group_name': type, 
                     'group_val': '',
                     'streams': [ streams[i]['stream'] ]
                 });
@@ -567,12 +567,12 @@ function getEvalStreamData(db, table) {
 
 }
 
-function getMultiEvalTypesData(db, types) {
+function getMultiAniyamaTypesData(db, types) {
     return new Promise(async(resolve, reject) => {
         data = {}
         for (var tidx in types) {
-            var table = types[tidx];
-            var result = await getEvalStreamData(db, table);
+            var type = types[tidx];
+            var result = await getAniyamaStreamData(db, type);
             for (ridx in result) {
                 var group_name = result[ridx]['group_name'];
                 if (group_name in data) { 
@@ -600,15 +600,15 @@ function getMultiEvalTypesData(db, types) {
 }
 
 
-router.get('/evalStream/:type/:stream', function(req, res, next) {
+router.get('/AniyamaStream/:type/:stream', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
 
 	var db = req.app.get('db');
-	var table = req.params.type;
+	var type = req.params.type;
     var stream = req.params.stream;
 
-    var q = "SELECT stream, timestamp, power AS value, anomaly FROM " + table + " WHERE stream='" + stream + "' ORDER BY TIMESTAMP DESC;";
-    console.log(q)
+    var q = "SELECT stream, timestamp, value, anomaly FROM aniyama" + 
+        " WHERE stream='" + stream + "' AND type='" + type + "' ORDER BY TIMESTAMP DESC;";
     db.query(q, function(error, results, fields) { 
         res.json(results); 
     });
