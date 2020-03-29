@@ -9,7 +9,6 @@ OUTPUT_DIR = os.path.abspath(__file__ + '/../../data/vector/split/stream_split')
 def main(args):
     if len(args) > 0:
         STREAM_DATA = os.path.abspath(__file__ + args[0])
-        OUTPUT_DIR = os.path.abspath(__file__ + args[1])
 
     with open(STREAM_DATA) as f:
         parsed = {}

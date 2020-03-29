@@ -12,7 +12,7 @@
             <mat-tab *ngFor="let stream of streams" label={{stream.stream}}>
                 <ng-template matTabContent>
                     <div class="actions">
-                        <button *ngIf="!isAniyama" mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                        <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
                         <section *ngIf="showMatch" class="check-section">
                             <label class="check">Does the result match?:</label>
                             <mat-radio-group (change)="onRadioChange($event, stream)" [(ngModel)]="stream.match">

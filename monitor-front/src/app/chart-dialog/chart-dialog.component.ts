@@ -15,6 +15,7 @@ export class ChartDialogComponent implements OnInit {
     name;
     value;
     streams;
+    events;
     stream;
     groupName;
     isAniyama;
@@ -38,6 +39,7 @@ export class ChartDialogComponent implements OnInit {
         this.name = this.data.name;
         this.value = this.data.value;
         this.streams = this.data.streams;
+        this.events = this.data.events;
         this.stream = this.streams[0].stream;
         this.groupName = this.data.groupName;
         this.isAniyama = this.data.isAniyama;
@@ -170,6 +172,8 @@ export class ChartDialogComponent implements OnInit {
             'name': name,
             'start': start,
             'end': end,
+            'events': this.events,
+            'isAniyama': this.isAniyama
         }
         dialogConfig.disableClose = true;
 

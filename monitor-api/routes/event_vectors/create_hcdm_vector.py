@@ -74,11 +74,16 @@ class data_feature_extractor():
 
 
 def main():
+    event, stream, start, end, table = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 
-    event, stream, start, end = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
     num_coeff, cols = data['num_coeff'], ['EVENT'] + data['cols']
 
-    query = "SELECT timestamp, value FROM stream_data WHERE name='%s' AND TIMESTAMP >= '%s' AND TIMESTAMP <= '%s' ORDER BY TIMESTAMP DESC" % (stream, start, end)
+    if table == 'aniyama':
+        key = 'stream'
+    else:
+        key = 'name'
+
+    query = "SELECT timestamp, value FROM %s WHERE %s='%s' AND TIMESTAMP >= '%s' AND TIMESTAMP <= '%s' ORDER BY TIMESTAMP DESC" % (table, key, stream, start, end)
     cursor = db.cursor()
     cursor.execute(query)
 

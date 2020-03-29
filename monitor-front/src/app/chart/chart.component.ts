@@ -173,6 +173,7 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
+            'events': this.events,
             'isAniyama': this.isAniyama,
             'groupName': group.group_name,
             'showMatch': this.isEvent && display,
@@ -192,13 +193,12 @@ export class ChartComponent implements OnInit {
 
     openEventDialog(name, start, end) {
         const dialogConfig = new MatDialogConfig();
-        // dialogConfig.height = "600px";
-        // dialogConfig.width = "400px";
         dialogConfig.data = {
             'name': name,
             'start': start,
             'end': end,
-            'events': this.events
+            'events': this.events,
+            'isAniyama': this.isAniyama
         }
         dialogConfig.disableClose = true;
 

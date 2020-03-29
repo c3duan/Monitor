@@ -22,17 +22,19 @@ export class EventDialogComponent implements OnInit {
     start;
     end;
     events;
+    isAniyama;
 
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<EventDialogComponent>, private eventService: EventService) { }
 
 
     ngOnInit() {
+        console.log(this.data);
         this.name = this.data.name;
         this.start = this.data.start;
         this.end = this.data.end;
         this.events = this.data.events;
-
+        this.isAniyama = this.data.isAniyama;
     }
 
 
@@ -42,8 +44,9 @@ export class EventDialogComponent implements OnInit {
         var streamName = this.name;
         var start = this.start;
         var end = this.end;
+        var isAniyama = this.isAniyama;
 
-        let success = this.eventService.submitEventData(eventName, streamName, start, end).then(success => {
+        let success = this.eventService.submitEventData(eventName, streamName, start, end, isAniyama).then(success => {
             this.events.push(eventName);
             this.dialogRef.close();
         });

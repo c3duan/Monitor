@@ -10,7 +10,7 @@ export class EventService {
     constructor(private http: HttpClient) { }
 
  
-    async submitEventData(eventName, streamName, start, end): Promise<{}> {
+    async submitEventData(eventName, streamName, start, end, isAniyama): Promise<{}> {
         var url = GlobVars.baseUrl + ':3000/api/saveEvent';
         return new Promise((resolve, reject) => {
             this.http.post(url, {
@@ -18,7 +18,8 @@ export class EventService {
                     'event': eventName,
                     'stream': streamName,
                     'start': start,
-                    'end': end
+                    'end': end,
+                    'isAniyama': isAniyama
                 }
             })
             .toPromise()

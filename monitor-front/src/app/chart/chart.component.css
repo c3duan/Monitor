@@ -148,7 +148,7 @@ li.search_page a:hover{
 }
 
 .sidenav-list {
-	width: 120px;
+	min-width: 200px;
 }
 
 .check-section {

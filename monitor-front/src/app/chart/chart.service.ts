@@ -122,7 +122,7 @@ export class ChartService {
 			x1: end,
 			y1: 1,
 			fillcolor: '#d3d3d3',
-			opacity: 0.7,
+			opacity: 0.4,
 			line: {
 				width: 0
 			}
@@ -244,13 +244,13 @@ export class ChartService {
 	}
 
     getChartDataEvent(name, id, start, end, chartComponent, layout?, config?): void {
-
+		if (this.charts[id]) return;
         var url = GlobVars.baseUrl + ':3000/api/selection'
         this.http.post(url, {
             'selectionData' : {
                 'stream': name,
                 'start': start,
-                'end': end
+				'end': end
             }
         }).subscribe(rows => {
 			this.drawPlot(id, rows, chartComponent, start, end, layout, config);

@@ -354,7 +354,15 @@ router.post('/selection', function(req, res, next) {
     var q = "SELECT * FROM stream_data WHERE name='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
 	var db = req.app.get('db');
 	db.query(q, function(error, results, fields) { 
-        res.json(results); 
+        console.log(results.length);
+        if (results.length == 0) {
+            var q = "SELECT * FROM aniyama WHERE stream='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
+            db.query(q, function(error, results, fields) { 
+                res.json(results);
+            });
+        } else {
+            res.json(results); 
+        }
     });
 
 });
@@ -460,9 +468,15 @@ router.post('/saveEvent', function(req, res, next) {
     var streamName = eventData['stream'];
     var start = Date.parse(eventData['start']) / 1000.0;
     var end = Date.parse(eventData['end']) / 1000.0;
-
+    var isAniyama = eventData['isAniyama'];
+    if (isAniyama) {
+        var table = "aniyama";
+    } else {
+        var table = "stream_data";
+    }
+    
     var spawn = req.app.get('spawn').spawn;
-    var process = spawn('python3', [__dirname + '/event_vectors/create_hcdm_vector.py', eventName, streamName, start, end]);
+    var process = spawn('python3', [__dirname + '/event_vectors/create_hcdm_vector.py', eventName, streamName, start, end, table]);
 
     process.stdout.on('data', (data) => {
         var results = String.fromCharCode.apply(null, data).split(',');
