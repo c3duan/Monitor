@@ -354,14 +354,19 @@ router.post('/selection', function(req, res, next) {
     var q = "SELECT * FROM stream_data WHERE name='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
 	var db = req.app.get('db');
 	db.query(q, function(error, results, fields) { 
-        console.log(results.length);
         if (results.length == 0) {
             var q = "SELECT * FROM aniyama WHERE stream='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
             db.query(q, function(error, results, fields) { 
-                res.json(results);
+                res.json({
+                    'data': results,
+                    'table': 'aniyama'
+                });
             });
         } else {
-            res.json(results); 
+            res.json({
+                'data': results,
+                'table': 'stream_data'
+            }); 
         }
     });
 

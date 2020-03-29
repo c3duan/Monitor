@@ -42,7 +42,7 @@ export class ChartDialogComponent implements OnInit {
         this.events = this.data.events;
         this.stream = this.streams[0].stream;
         this.groupName = this.data.groupName;
-        this.isAniyama = this.data.isAniyama;
+        this.isAniyama = this.data.isAniyama || this.streams[0].table === 'aniyama';
         this.showMatch = this.data.showMatch;
         this.checked = this.data.checked;
         this.starts = this.data.start;
@@ -50,26 +50,25 @@ export class ChartDialogComponent implements OnInit {
         this.atts = [];
         var stream_label = this.stream + '_dialog';
 
-        if (!this.isAniyama) {
-            let attributes = this.chartDialogService.getChartAttributes(this.stream).then(attributes => {
-                for (var att_index in attributes) {
-                    this.atts.push({
-                        'stream': this.stream,
-                        'attribute': attributes[att_index]['attribute'],
-                        'value': attributes[att_index]['value']
-                    });
-                }
-            });
-    
-            if (this.starts === null) {
+        if (this.starts === null) {
+            if (!this.isAniyama) {
+                let attributes = this.chartDialogService.getChartAttributes(this.stream).then(attributes => {
+                    for (var att_index in attributes) {
+                        this.atts.push({
+                            'stream': this.stream,
+                            'attribute': attributes[att_index]['attribute'],
+                            'value': attributes[att_index]['value']
+                        });
+                    }
+                });
                 this.chartService.getChartData(this.stream, stream_label, this, { height: 400, xaxis: { nticks: 25 } });
             } else {
-                var start = this.starts[0];
-                var end = this.ends[0];
-                this.chartService.getChartDataEvent(this.stream, stream_label, start, end, this, { height: 400 });
+                this.chartService.getChartDataAniyama(this.stream, this.groupName, stream_label, this, { height: 500 });
             }
         } else {
-            this.chartService.getChartDataAniyama(this.stream, this.groupName, stream_label, this, { height: 500 });
+            var start = this.starts[0];
+            var end = this.ends[0];
+            this.chartService.getChartDataEvent(this.streams[0], stream_label, start, end, this, { height: 400 });
         }
 
     }
@@ -166,8 +165,6 @@ export class ChartDialogComponent implements OnInit {
 
     openEventDialog(name, start, end) {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.height = "600px";
-        dialogConfig.width = "400px";
         dialogConfig.data = {
             'name': name,
             'start': start,

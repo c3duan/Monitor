@@ -151,10 +151,10 @@ export class ChartComponent implements OnInit {
     }
 
     getEventChart(index: number) {
-        var name = this.all_groups[index]['streams'][0].stream;
+        var stream = this.all_groups[index]['streams'][0];
         var start = this.all_groups[index]['start'][0];
         var end = this.all_groups[index]['end'][0];
-        this.chartService.getChartDataEvent(name, name, start, end, this);
+        this.chartService.getChartDataEvent(stream, stream.stream, start, end, this);
     }
 
 
@@ -188,17 +188,17 @@ export class ChartComponent implements OnInit {
     openCurrentEventDialog(stream) {
         const { start, end } = this.chartService.getEventRange(stream);
 
-        this.openEventDialog(stream, start, end)
+        this.openEventDialog(stream, start, end, stream.table)
     }
 
-    openEventDialog(name, start, end) {
+    openEventDialog(name, start, end, table) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
             'name': name,
             'start': start,
             'end': end,
             'events': this.events,
-            'isAniyama': this.isAniyama
+            'isAniyama': this.isAniyama || table === 'aniyama'
         }
         dialogConfig.disableClose = true;
 
