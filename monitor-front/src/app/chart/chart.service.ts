@@ -159,8 +159,7 @@ export class ChartService {
 			const new_layout = Object.assign(this.charts[id].layout, layout);
 			this.charts[id].layout = new_layout;
 		}
-		console.log(layout);
-		console.log(this.charts[id].layout);
+		
 
 		if (config) {
 			const new_config = Object.assign(this.charts[id].config, config);
@@ -245,7 +244,9 @@ export class ChartService {
 
     getChartDataEvent(stream, id, start, end, chartComponent, layout?, config?): void {
 		if (!id.includes("_dialog") && this.charts[id]) return;
-        var url = GlobVars.baseUrl + ':3000/api/selection'
+		var url = GlobVars.baseUrl + ':3000/api/selection'
+		
+		console.log(`${stream.stream}|${start}|${end}`);
         this.http.post(url, {
             'selectionData' : {
                 'stream': stream.stream,

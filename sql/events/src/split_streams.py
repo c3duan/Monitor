@@ -2,11 +2,10 @@ from tqdm import tqdm
 import os
 import sys
 
-STREAM_DATA = os.path.abspath(__file__ + '/../../../sample_data/data.csv')
 OUTPUT_DIR = os.path.abspath(__file__ + '/../../data/vector/split/stream_split')
 
-
 def main(args):
+    STREAM_DATA = os.path.abspath(__file__ + '/../../../sample_data/data.csv')
     if len(args) > 0:
         STREAM_DATA = os.path.abspath(__file__ + args[0])
 

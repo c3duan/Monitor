@@ -107,7 +107,7 @@ function getEventData(req, query) {
             var eventName = results[0]['event'];
 
             var spawn = req.app.get('spawn').spawn;
-            var process = spawn('python3', [__dirname + '/event_vectors/split_compare_hcdm_vectors.py', eventName]);
+            var process = spawn('python3', [__dirname + '/event_vectors/meta_learning.py', eventName]);
 
             process.stdout.on('data', (data) => {
                 var streams = String.fromCharCode.apply(null, data).split('\n');
@@ -347,13 +347,13 @@ router.post('/selection', function(req, res, next) {
 
 	var data = req.body.selectionData;
     var name = data['stream'];
-    var offset = 6 * 60 * 60;
+    var offset = 0;
     var start = parseInt(data['start']) - offset;
     var end = parseInt(data['end']) + offset;
 
     var q = "SELECT * FROM stream_data WHERE name='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
 	var db = req.app.get('db');
-	db.query(q, function(error, results, fields) { 
+	db.query(q, function(error, results, fields) {
         if (results.length == 0) {
             var q = "SELECT * FROM aniyama WHERE stream='" + name + "' AND TIMESTAMP >= " + start + " AND TIMESTAMP <= " + end + " ORDER BY TIMESTAMP DESC;";
             db.query(q, function(error, results, fields) { 

@@ -1,5 +1,7 @@
+__pycache__/
 node_modules/
 *.csv
 *.log
+*.npy
 .env
 .vscode/

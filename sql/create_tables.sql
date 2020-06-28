@@ -1,6 +1,6 @@
 -- CREATE DATABASE --
 
-DROP DATABASE monitor_db;
+DROP DATABASE IF EXISTS monitor_db;
 CREATE DATABASE monitor_db;
 USE monitor_db;
 

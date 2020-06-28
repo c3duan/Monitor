@@ -9,13 +9,13 @@ load_dotenv(dotenv_path=env_path)
 
 DB_HOST = os.getenv("DB_HOST")
 DB_USERNAME = os.getenv("DB_USERNAME")
-DB_DATABSE = os.getenv("DB_DATABASE")
+DB_DATABASE = os.getenv("DB_DATABASE")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 db = mysql.connector.connect(
         host=DB_HOST,
         user=DB_USERNAME,
-        database=DB_DATABSE,
+        database=DB_DATABASE,
         password=DB_PASSWORD,
         auth_plugin='mysql_native_password',
     )
