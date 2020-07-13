@@ -230,17 +230,17 @@ def main():
 
     sqlstr += 'DROP TABLE IF EXISTS hcdm_vectors;\n\n'
 
-    sqlstr += 'CREATE TABLE hcdm_vectors (\n'
+    sqlstr += 'CREATE TABLE hcdm_vectors \n'
     sqlstr += '\tSELECT '
     for col in cols[:-1]: 
         sqlstr += '%s, ' % col
     sqlstr += '%s\n' % cols[-1]
-    sqlstr += '\tFROM hcdm_vectors_start as a, (SELECT DISTINCT name FROM stream_data) AS b \n\tWHERE a.stream = b.name \n\tUNION\n'
+    sqlstr += '\tFROM hcdm_vectors_start as a, (SELECT DISTINCT name FROM stream_data) AS b\n\tWHERE a.stream = b.name \n\tUNION \n'
     sqlstr += '\tSELECT '
     for col in cols[:-1]: 
         sqlstr += '%s, ' % col
     sqlstr += '%s\n' % cols[-1]
-    sqlstr += '\tFROM hcdm_vectors_start as a, (SELECT DISTINCT stream AS title FROM aniyama) AS c \n\tWHERE a.stream = c.title\n);\n\n'
+    sqlstr += '\tFROM hcdm_vectors_start as a, (SELECT DISTINCT stream AS title FROM aniyama) AS c \n\tWHERE a.stream = c.title;\n\n'
 
     sqlstr += 'DROP TABLE hcdm_vectors_start;'
 

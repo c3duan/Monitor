@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 # Pretty colors!
 RED='\e[31m'
 GREEN='\e[32m'
@@ -46,7 +46,7 @@ echo "1. Spliting Streams ...";
 python3 ./sql/events/src/split_streams.py;
 python3 ./sql/events/src/split_streams.py /../../data/vector/aniyama/aniyama_data.csv;
 echo "2. Extracting Features ...";
-python3 ./sql/monitor_db/events/src/feature_extractor.py;
+python3 ./sql/events/src/feature_extractor.py;
 echo "3. Creating Event Table";
 mysql --local-infile=1 -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e 'source ./sql/events/data/vector/event_table.sql;';
 echo "4. Creating Vector Table";

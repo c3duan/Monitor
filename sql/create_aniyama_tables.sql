@@ -15,6 +15,6 @@ CREATE TABLE aniyama (
 
 -- LOAD DATA --
 
-LOAD DATA LOCAL INFILE "events/data/vector/aniyama/aniyama_data.csv" INTO TABLE aniyama FIELDS TERMINATED BY ",";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/events/data/vector/aniyama/aniyama_data.csv" INTO TABLE aniyama FIELDS TERMINATED BY ",";
 
 CREATE INDEX aniyama on aniyama(stream, type);
