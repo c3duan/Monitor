@@ -91,7 +91,6 @@ export class ChartService {
 			chartComponent.all_groups = all_data;
 			if (!chartComponent.isEvent) {
 				chartComponent.vis_groups = all_data[0];
-				console.log(chartComponent.vis_groups);
 				chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
 			}
 			chartComponent.no_results = all_data.length > 0 ? false : true;
@@ -246,7 +245,6 @@ export class ChartService {
 		if (!id.includes("_dialog") && this.charts[id]) return;
 		var url = GlobVars.baseUrl + ':3000/api/selection'
 		
-		console.log(`${stream.stream}|${start}|${end}`);
         this.http.post(url, {
             'selectionData' : {
                 'stream': stream.stream,
@@ -280,8 +278,6 @@ export class ChartService {
         
         var start = xvals[ix1];
         var end = xvals[ix2];
-
-        console.log(plotDiv);
 
         return { start, end }
     }

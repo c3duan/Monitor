@@ -1,6 +1,7 @@
 __pycache__/
 node_modules/
 *.csv
+*.txt
 *.log
 *.npy
 .env

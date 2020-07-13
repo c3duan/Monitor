@@ -49,7 +49,9 @@ def main():
     print('%s,%s,%s' % (event_stream, start, end))
     for i in range(1, TOP+1):
         distance, stream, index, M = distances[i]
-        time_start, time_end = data_dict[stream][index, 0], data_dict[stream][index+M, 0]
+        max_len = len(data_dict[stream])
+        end_index = min(max_len, index+M)
+        time_start, time_end = data_dict[stream][index, 0], data_dict[stream][end_index, 0]
         print('%s,%s,%s,%s' % (stream, int(time_start), int(time_end), distance))
     sys.stdout.flush()
 

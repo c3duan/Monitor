@@ -29,7 +29,6 @@ export class EventDialogComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log(this.data);
         this.name = this.data.name;
         this.start = this.data.start;
         this.end = this.data.end;
