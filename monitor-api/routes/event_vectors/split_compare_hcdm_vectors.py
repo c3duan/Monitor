@@ -6,7 +6,6 @@ from db import db
 
 
 def csim(a, b): 
-   
     return np.abs(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
 
 

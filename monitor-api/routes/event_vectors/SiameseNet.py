@@ -12,10 +12,14 @@ class RNNSiameseNet(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.fc = nn.Linear(hidden_dim, output_dim)
 
-    def forward_once(self, inputs):
+    def embed(self, inputs):
         inputs = inputs.T.view(*inputs.T.shape, self.encode_dim)
         packed_outputs, (hidden, cell) = self.lstm(inputs)
         hidden = self.dropout(hidden[-1, :, :].squeeze(0))
+        return hidden
+
+    def forward_once(self, inputs):
+        hidden = self.embed(inputs)
         outputs = self.fc(hidden)
         return outputs
 

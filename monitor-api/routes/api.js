@@ -107,7 +107,7 @@ function getEventData(req, query) {
             var eventName = results[0]['event'];
 
             var spawn = req.app.get('spawn').spawn;
-            var process = spawn('python3', [__dirname + '/event_vectors/meta_learning.py', eventName]);
+            var process = spawn('python3', [__dirname + '/event_vectors/DTW.py', eventName]);
 
             process.stdout.on('data', (data) => {
                 var streams = String.fromCharCode.apply(null, data).split('\n');
