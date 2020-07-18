@@ -45,14 +45,20 @@ echo -e "${GREEN}Creating${NC} Container";
 docker run --name="${REQUIRED_ENV_VARS[DB_DATABASE]}" --net=monitor_network -e MYSQL_ROOT_PASSWORD="${REQUIRED_ENV_VARS[DB_PASSWORD]}" -v monitor_db_volume:/var/lib/mysql -d monitor_db;
 sleep 30;
 docker exec monitor_db mysql -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e 'SET GLOBAL local_infile = 1;';
-docker exec monitor_db mysql -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e "ALTER USER '${REQUIRED_ENV_VARS[DB_USERNAME]}'@'${REQUIRED_ENV_VARS[DB_HOST]}' IDENTIFIED WITH mysql_native_password BY '${REQUIRED_ENV_VARS[DB_PASSWORD]}'; FLUSH PRIVILEGES;";
+docker exec monitor_db mysql -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e "ALTER USER '${REQUIRED_ENV_VARS[DB_USERNAME]}' IDENTIFIED WITH mysql_native_password BY '${REQUIRED_ENV_VARS[DB_PASSWORD]}'; FLUSH PRIVILEGES;";
 
-echo -e "${GREEN}Populating${NC} Database [${RED}This takes super long :(${NC}]";
+echo -e "${GREEN}Populating${NC} Monitor Database [${RED}This takes super long :(${NC}]";
 docker exec monitor_db mysql --local-infile=1 -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e 'source /home/monitor_db/create_tables.sql;';
+
+
+echo -e "${GREEN}Populating${NC} Aniyama Database"
+docker exec monitor_db python3 /home/monitor_db/events/src/aniyama_data_processor.py;
+docker exec monitor_db mysql --local-infile=1 -h "${REQUIRED_ENV_VARS[DB_HOST]}" -u "${REQUIRED_ENV_VARS[DB_USERNAME]}" -p${REQUIRED_ENV_VARS[DB_PASSWORD]} -e 'source /home/monitor_db/create_aniyama_tables.sql;';
 
 echo -e "${GREEN}Creating${NC} Feature Vectors";
 echo "1. Spliting Streams ...";
 docker exec monitor_db python3 /home/monitor_db/events/src/split_streams.py;
+docker exec monitor_db python3 /home/monitor_db/events/src/split_streams.py /../../data/vector/aniyama/aniyama_data.csv;
 echo "2. Extracting Features ...";
 docker exec monitor_db python3 /home/monitor_db/events/src/feature_extractor.py;
 echo "3. Creating Event Table";
@@ -81,7 +87,11 @@ echo -e "${GREEN}Removing${NC} Existing Backend Image";
 docker rmi monitor_api;
 
 echo -e "${GREEN}Copying${NC} .env file into monitor_api container";
-cp .env monitor_api/;
+REQUIRED_ENV_VARS[DB_HOST]=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' monitor_db`
+for i in "${!REQUIRED_ENV_VARS[@]}"
+do
+  printf "$i=${REQUIRED_ENV_VARS[$i]}\n" >> "monitor-api/.env"
+done
 
 echo -e "${GREEN}Creating${NC} Image";
 docker build -t monitor_api monitor-api;
@@ -93,8 +103,8 @@ echo -e "${GREEN}Installing${NC} Python";
 docker exec monitor_api apt-get update;
 docker exec monitor_api apt-get -y install python3 python3-pip;
 docker exec monitor_api pip3 install -U pip;
-docker exec monitor_api pip install mysql-connector sklearn scipy tqdm numpy python-dotenv;
-docker exec monitor_api pip install --user mysql-connector-python
+docker exec monitor_api pip3 install mysql-connector sklearn scipy tqdm numpy python-dotenv numpy;
+docker exec monitor_api pip3 install --user mysql-connector-python;
 
 ###########################
 # MONITOR FRONT CONTAINER #

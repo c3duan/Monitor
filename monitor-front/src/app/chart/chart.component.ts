@@ -18,7 +18,7 @@ export class ChartComponent implements OnInit {
     all_groups: any[];
     vis_groups: any[];
     isEvent: boolean;
-    isEval: boolean;
+    isAniyama: boolean;
     no_results: boolean;
     waiting: boolean;
     pages: number[];
@@ -66,7 +66,7 @@ export class ChartComponent implements OnInit {
         this.all_groups = null;
         this.vis_groups = null;
         this.isEvent = false;
-        this.isEval = false;
+        this.isAniyama = false;
         this.waiting = false;
         this.pages = null;
         this.eventService.getEventData().subscribe(rows => {
@@ -92,7 +92,8 @@ export class ChartComponent implements OnInit {
         this.vis_groups = null;
         this.waiting = true;
         this.pages = null;
-        
+
+        query = query.toLowerCase();
         let translated = this.chartService.translateQuery(query).then(translated => {
             var query = translated['newQuery'];
 
@@ -102,10 +103,10 @@ export class ChartComponent implements OnInit {
                 this.isEvent = false;
             }
 
-            if (query.includes('eval')) {
-                this.isEval = true;
+            if (query.includes('aniyama')) {
+                this.isAniyama = true;
             } else {
-                this.isEval = false;
+                this.isAniyama = false;
             }
 
             this.chartService.search(query, this);
@@ -116,8 +117,8 @@ export class ChartComponent implements OnInit {
 
 	getChart(event: MatTabChangeEvent, group_name) {
         var stream = event.tab.textLabel;
-        if (this.isEval) {
-            this.chartService.getChartDataEval(stream, group_name, stream, this);
+        if (this.isAniyama) {
+            this.chartService.getChartDataAniyama(stream, group_name, stream, this);
         } else {
             this.chartService.getChartData(stream, stream, this);
         }
@@ -132,9 +133,9 @@ export class ChartComponent implements OnInit {
         } else {
             for (var row in this.vis_groups) {
                 var name = this.vis_groups[row]['streams'][0].stream;
-                if (this.isEval) {
+                if (this.isAniyama) {
                     var type = this.vis_groups[row]['group_name'];
-                    this.chartService.getChartDataEval(name, type, name, this);
+                    this.chartService.getChartDataAniyama(name, type, name, this);
                 } else {
                     this.chartService.getChartData(name, name, this);
                 }
@@ -150,10 +151,10 @@ export class ChartComponent implements OnInit {
     }
 
     getEventChart(index: number) {
-        var name = this.all_groups[index]['streams'][0].stream;
+        var stream = this.all_groups[index]['streams'][0];
         var start = this.all_groups[index]['start'][0];
         var end = this.all_groups[index]['end'][0];
-        this.chartService.getChartDataEvent(name, name, start, end, this);
+        this.chartService.getChartDataEvent(stream, stream.stream, start, end, this);
     }
 
 
@@ -172,7 +173,8 @@ export class ChartComponent implements OnInit {
             'name': group.group_name,
             'value': group.group_val,
             'streams': group.streams,
-            'isEval': this.isEval,
+            'events': this.events,
+            'isAniyama': this.isAniyama,
             'groupName': group.group_name,
             'showMatch': this.isEvent && display,
             'start': group.start,
@@ -186,18 +188,17 @@ export class ChartComponent implements OnInit {
     openCurrentEventDialog(stream) {
         const { start, end } = this.chartService.getEventRange(stream);
 
-        this.openEventDialog(stream, start, end)
+        this.openEventDialog(stream, start, end, stream.table)
     }
 
-    openEventDialog(name, start, end) {
+    openEventDialog(name, start, end, table) {
         const dialogConfig = new MatDialogConfig();
-        // dialogConfig.height = "600px";
-        // dialogConfig.width = "400px";
         dialogConfig.data = {
             'name': name,
             'start': start,
             'end': end,
-            'events': this.events
+            'events': this.events,
+            'isAniyama': this.isAniyama || table === 'aniyama'
         }
         dialogConfig.disableClose = true;
 

@@ -1,6 +1,7 @@
 ﻿from tqdm import trange, tqdm
 import numpy as np
 import os
+import sys
 
 
 COMPLETE = os.path.abspath(__file__ + '/../../data/vector/hcdm_vectors_reduced.csv')

@@ -47,7 +47,7 @@ def main():
 
     final = sorted(final.items(), key=lambda x: x[1][2], reverse=True)
     print('%s,%s,%s' % (stream, start, end))
-    for i in range(100): 
+    for i in range(len(final)): 
         print('%s,%s,%s,%s' % (final[i][0], final[i][1][0], final[i][1][1], final[i][1][2]))
     sys.stdout.flush()
 

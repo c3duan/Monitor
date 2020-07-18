@@ -91,7 +91,6 @@ export class ChartService {
 			chartComponent.all_groups = all_data;
 			if (!chartComponent.isEvent) {
 				chartComponent.vis_groups = all_data[0];
-				console.log(chartComponent.vis_groups);
 				chartComponent.pages = Array.apply(null, {length: all_data.length}).map(Number.call, Number);
 			}
 			chartComponent.no_results = all_data.length > 0 ? false : true;
@@ -122,14 +121,14 @@ export class ChartService {
 			x1: end,
 			y1: 1,
 			fillcolor: '#d3d3d3',
-			opacity: 0.7,
+			opacity: 0.4,
 			line: {
 				width: 0
 			}
 		};
 	}
 
-	drawPlot(id: string, rows: any, chartComponent, start?, end?, layout?, config?) {
+	drawPlot(id: string, rows: any, chartComponent, start?, end?, layout?, config?, table?) {
 		var x = []; 
 		var y = [];
 		var anomalies: Set<number> = new Set();
@@ -137,7 +136,7 @@ export class ChartService {
 		for (var row_index in rows) {
 			x.push(new Date(rows[row_index]['timestamp'] * 1000).toLocaleString());
 			y.push(rows[row_index]['value']);
-			if ('anomaly' in rows[row_index] && rows[row_index]['anomaly']) {
+			if (!start && !end && 'anomaly' in rows[row_index] && rows[row_index]['anomaly']) {
 				anomalies.add(Math.max(0, parseInt(row_index)-1));
 				anomalies.add(parseInt(row_index));
 				anomalies.add(Math.min(rows.length-1, parseInt(row_index)+1));
@@ -159,8 +158,7 @@ export class ChartService {
 			const new_layout = Object.assign(this.charts[id].layout, layout);
 			this.charts[id].layout = new_layout;
 		}
-		console.log(layout);
-		console.log(this.charts[id].layout);
+		
 
 		if (config) {
 			const new_config = Object.assign(this.charts[id].config, config);
@@ -208,11 +206,11 @@ export class ChartService {
 		plotDiv.on('plotly_selected', (eventData) => {
 			const start = eventData.range.x[0];
 			const end = eventData.range.x[1];
-			this.onSelected(id, start, end, this.charts[id].layout, chartComponent);
+			this.onSelected(id, start, end, this.charts[id].layout, chartComponent, table);
 		});
 	}
 
-	onSelected(id, start, end, layout, chartComponent): void {
+	onSelected(id, start, end, layout, chartComponent, table?): void {
 		const shape = this.getShape(start, end);
 		layout.shapes.push(shape);
 		const key = `shapes[${layout.shapes.length-1}]`;
@@ -223,7 +221,7 @@ export class ChartService {
 		if (id.search('dialog') !== -1) {
 			id = id.substring(0, id.length-7);
 		}
-		chartComponent.openEventDialog(id, start, end);
+		chartComponent.openEventDialog(id, start, end, table);
 	}
 
 	onFinishedEventSelect(id) {
@@ -239,26 +237,29 @@ export class ChartService {
     getChartData(name, id, chartComponent, layout?, config?): void {
         var url = GlobVars.baseUrl + ':3000/api/name/' + name
 		this.http.get(url).subscribe(rows => {
-			this.drawPlot(id, rows, chartComponent, null, null, layout, config);
+			this.drawPlot(id, rows, chartComponent, null, null, layout, config, null);
 		});
 	}
 
-    getChartDataEvent(name, id, start, end, chartComponent, layout?, config?): void {
-
-        var url = GlobVars.baseUrl + ':3000/api/selection'
+    getChartDataEvent(stream, id, start, end, chartComponent, layout?, config?): void {
+		if (!id.includes("_dialog") && this.charts[id]) return;
+		var url = GlobVars.baseUrl + ':3000/api/selection'
+		
         this.http.post(url, {
             'selectionData' : {
-                'stream': name,
+                'stream': stream.stream,
                 'start': start,
-                'end': end
+				'end': end
             }
-        }).subscribe(rows => {
-			this.drawPlot(id, rows, chartComponent, start, end, layout, config);
+        }).subscribe(results => {
+			const rows = results['data'];
+			stream.table = results['table'];
+			this.drawPlot(id, rows, chartComponent, start, end, layout, config, stream.table);
 		});
 	}
 
-	getChartDataEval(name, type, id, chartComponent, layout?, config?): void {
-        var url = GlobVars.baseUrl + ':3000/api/evalStream/' + type + '/' + name;
+	getChartDataAniyama(name, type, id, chartComponent, layout?, config?): void {
+        var url = GlobVars.baseUrl + ':3000/api/AniyamaStream/' + type + '/' + name;
 		this.http.get(url).subscribe(rows => {
 			this.drawPlot(id, rows, chartComponent, null, null, layout, config);
 		});
@@ -277,8 +278,6 @@ export class ChartService {
         
         var start = xvals[ix1];
         var end = xvals[ix2];
-
-        console.log(plotDiv);
 
         return { start, end }
     }

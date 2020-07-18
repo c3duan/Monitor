@@ -1,6 +1,6 @@
 -- CREATE DATABASE --
 
-DROP DATABASE monitor_db;
+DROP DATABASE IF EXISTS monitor_db;
 CREATE DATABASE monitor_db;
 USE monitor_db;
 
@@ -50,15 +50,15 @@ CREATE TABLE attribute_alias (
 
 -- LOAD DATA --
 
-LOAD DATA LOCAL INFILE "sample_data/class_mapping.csv" INTO TABLE mapping FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/rice_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/sdh_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/soda_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/stream_attributes.csv" INTO TABLE stream_attributes FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/extra_stream_attributes.csv" INTO TABLE stream_attributes FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/attribute_index.csv" INTO TABLE attribute_index FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/attribute_extension.csv" INTO TABLE attribute_extension FIELDS TERMINATED BY "|";
-LOAD DATA LOCAL INFILE "sample_data/data.csv" INTO TABLE streams FIELDS TERMINATED BY ",";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/class_mapping.csv" INTO TABLE mapping FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/rice_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/sdh_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/soda_ground_truth.csv" INTO TABLE ground_truth FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/stream_attributes.csv" INTO TABLE stream_attributes FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/extra_stream_attributes.csv" INTO TABLE stream_attributes FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/attribute_index.csv" INTO TABLE attribute_index FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/attribute_extension.csv" INTO TABLE attribute_extension FIELDS TERMINATED BY "|";
+LOAD DATA LOCAL INFILE "~/CS/UCSD/Research/Data-Mining-Lab/Monitor/sql/sample_data/data.csv" INTO TABLE streams FIELDS TERMINATED BY ",";
 
 -- DATA BASED TABLES --
 

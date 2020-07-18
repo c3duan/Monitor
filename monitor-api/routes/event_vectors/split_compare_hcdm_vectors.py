@@ -6,7 +6,6 @@ from db import db
 
 
 def csim(a, b): 
-   
     return np.abs(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
 
 
@@ -71,8 +70,10 @@ def main():
             final[nstream] = (nstart, nend, item[3])
 
     final = sorted(final.items(), key=lambda x: x[1][2], reverse=True)
+    #houses = set([str(i) for i in range(1, 23)] + ['house1', 'house4', 'house6'] + ['House' + str(i) for i in range(1, 22)])
     print('%s,%s,%s' % (stream, start, end))
     for item in final[:100]: 
+        #if item[0] in houses:
         print('%s,%s,%s,%s' % (item[0], item[1][0], item[1][1], item[1][2]))
     sys.stdout.flush()
 

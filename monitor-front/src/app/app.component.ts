@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
 
-	title = 'IOT Monitor'; 
+	title = 'IoT Monitor'; 
 	chart = true;
 	form = false;
     help = false;

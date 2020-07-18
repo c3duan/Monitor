@@ -1,6 +1,6 @@
 <h2 class="group_title" mat-dialog-title>{{name}} {{value}}</h2>
 <div class="group_dialog_content">
-    <mat-chip-list *ngIf="!isEval">
+    <mat-chip-list *ngIf="!isAniyama">
         <mat-chip *ngFor="let att of atts" (click)="openAttributeDialog(att)">
             {{att.attribute}}: {{att.value}}
         </mat-chip>
@@ -12,7 +12,7 @@
             <mat-tab *ngFor="let stream of streams" label={{stream.stream}}>
                 <ng-template matTabContent>
                     <div class="actions">
-                        <button *ngIf="!isEval" mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
+                        <button mat-icon-button (click)="openCurrentEventDialog(stream.stream)"><mat-icon>add_comment</mat-icon></button>
                         <section *ngIf="showMatch" class="check-section">
                             <label class="check">Does the result match?:</label>
                             <mat-radio-group (change)="onRadioChange($event, stream)" [(ngModel)]="stream.match">
